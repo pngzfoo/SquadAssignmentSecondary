@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:background="@color/white"
+        android:id="@+id/cardView">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:layout_editor_absoluteY="0dp"
+            tools:layout_editor_absoluteX="-102dp"
+            >
+
+        <ImageView
+                android:layout_width="103dp"
+                android:layout_height="124dp" tools:srcCompat="@tools:sample/avatars"
+                android:id="@+id/mobilePic" app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="10dp" app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="10dp" app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginBottom="8dp"/>
+        <ImageButton
+                android:layout_width="40dp"
+                android:layout_height="40dp" app:srcCompat="@drawable/cute_heart_button"
+                android:id="@+id/heartImageButton"
+                android:background="@color/white"
+                android:scaleType="centerInside"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+        <TextView
+                android:text="mobileName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:id="@+id/mobileName"
+                app:layout_constraintTop_toTopOf="parent"
+                android:textSize="20dp"
+                android:textColor="@color/cardview_dark_background"
+                android:layout_marginTop="10dp" android:layout_marginStart="25dp"
+                app:layout_constraintStart_toEndOf="@+id/mobilePic" android:textStyle="bold"/>
+        <TextView
+                android:text="mobileDescription"
+                android:layout_width="198dp"
+                android:layout_height="37dp" android:id="@+id/mobileDescription"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/mobilePic" android:layout_marginStart="25dp"
+                app:layout_constraintHorizontal_bias="0.0" android:layout_marginTop="5dp"
+                app:layout_constraintTop_toBottomOf="@+id/mobileName" android:layout_marginEnd="20dp"/>
+        <TextView
+                android:text="mobilePrice"
+                android:layout_width="wrap_content"
+                android:layout_height="18dp" android:id="@+id/mobilePrice"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginBottom="15dp" android:layout_marginStart="25dp"
+                app:layout_constraintStart_toEndOf="@+id/mobilePic"/>
+        <TextView
+                android:text="mobileRating"
+                android:layout_width="wrap_content"
+                android:layout_height="18dp" android:id="@+id/mobileRating"
+                android:layout_marginEnd="20dp"
+                app:layout_constraintEnd_toEndOf="parent" android:layout_marginStart="75dp"
+                app:layout_constraintStart_toEndOf="@+id/mobilePrice" android:layout_marginBottom="15dp"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
