@@ -45,19 +45,18 @@ class MainActivity : AppCompatActivity(), FragmentInterface {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        presenter.getFragment()
+        presenter.getFragment(0)
 
-        //      dialog for sorting
+//      dialog for sorting
         sortImageButton.setOnClickListener{
             val listSort = arrayOf("Price low to high","Price high to low","Rating 5-1")
             val aBuilder = AlertDialog.Builder(this@MainActivity)
             aBuilder.setSingleChoiceItems(listSort,-1){
                     dialogInterface, i -> run{
                 when(i){
-                    1-> print(1)
-
-                    2-> print(2)
-                    3-> print(3)
+                    1-> presenter.getFragment(1)
+                    2-> presenter.getFragment(2)
+                    3-> presenter.getFragment(3)
                 }
             }
 

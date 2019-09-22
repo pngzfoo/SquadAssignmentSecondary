@@ -14,6 +14,7 @@ import com.example.testfragment.mobile_interface.MobilePresenterInterface
 import com.example.testfragment.model.MobileModel
 import com.example.testfragment.service.MobileManager
 import com.example.testfragment.sharedPreference
+import com.example.testfragment.ui.main.Sort
 import com.example.testfragment.ui.main.main.mobile_detail.MobileDetailActivity
 import kotlinx.android.synthetic.main.fragment_main.*
 
@@ -38,13 +39,15 @@ import kotlinx.android.synthetic.main.fragment_main.*
 //}
 
 
-class MobileListFragment : Fragment(), MobilePresenterInterface {
+class MobileListFragment(i : Int) : Fragment(), MobilePresenterInterface {
 
     companion object {
         // tell that what value should send when navigate
-        fun newInstance(): MobileListFragment = MobileListFragment()
+        fun newInstance(i: Int): MobileListFragment = MobileListFragment(i)
+
     }
 
+    private val sort = Sort(i)
     private val presenter = MobilePresenter(this, MobileManager.getService())
 
     override fun onCreateView(
@@ -62,17 +65,16 @@ class MobileListFragment : Fragment(), MobilePresenterInterface {
 
     override fun setMobile(mobileModelList: List<MobileModel>) {
 
+
         val listener = object : MobileItemClickListener {
             override fun onItemClick(mobileModel: MobileModel) {
                MobileDetailActivity.startActivity(context, mobileModel)
             }
         }
 //        var mobilePref:sharedPreference? = context?.let { sharedPreference(it) }
-        val sectionPagerAdapter = MobileAdapter(mobileModelList, listener)//ส่งlistener
+        val sectionPagerAdapter = MobileAdapter(sort.sortBy(mobileModelList), listener)//ส่งlistener
         rvMobileList.adapter = sectionPagerAdapter
         rvMobileList.layoutManager = LinearLayoutManager(context)
-
-
 
     }
 
