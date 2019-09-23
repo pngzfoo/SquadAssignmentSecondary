@@ -8,9 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.testfragment.R
 import com.example.testfragment.mobile_interface.MobileItemClickListener
 import com.example.testfragment.model.MobileModel
-import com.example.testfragment.sharedPreference
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.mobile_favorite_card_holder.view.*
 import kotlinx.android.synthetic.main.mobile_list_card_holder.view.*
 
 class MobileListHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
@@ -28,6 +26,7 @@ class MobileListHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
             .load(model.thumbImageURL)
             //.placeholder(R.mipmap.ic_launcher)
             .into(itemView.mobilePic)
+        itemView.mobileName.text = model.name
         itemView.mobileDescription.text = model.description
         itemView.mobilePrice.text = "Price: $${model.price}"
         itemView.mobileRating.text = "Rating: ${model.rating.toString()}"

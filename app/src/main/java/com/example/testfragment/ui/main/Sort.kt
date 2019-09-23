@@ -10,11 +10,11 @@ class Sort(i: Int) {
     fun sortBy(mobileModelList: List<MobileModel>) :List<MobileModel> {
 
         return when (int) {
-            1 -> return mobileModelList.sortedBy { it.price }
-            2 -> return mobileModelList.sortedByDescending { it.price }
-            3 -> return mobileModelList.sortedBy { it.rating }
+            0 -> mobileModelList.sortedBy { it.price }
+            1 -> mobileModelList.sortedByDescending { it.price }
+            2 -> mobileModelList.sortedBy { it.rating }
 
-            else -> return mobileModelList
+            else -> mobileModelList
         }
 
     }

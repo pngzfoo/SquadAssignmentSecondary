@@ -7,14 +7,13 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.testfragment.R
-import com.example.testfragment.adapter.MobileAdapter
 import com.example.testfragment.adapter.MobileFavoriteAdapter
 import com.example.testfragment.adapter.MobilePresenter
 import com.example.testfragment.mobile_interface.MobileItemClickListener
 import com.example.testfragment.mobile_interface.MobilePresenterInterface
 import com.example.testfragment.model.MobileModel
 import com.example.testfragment.service.MobileManager
-import com.example.testfragment.sharedPreference
+import com.example.testfragment.ui.main.Sort
 import com.example.testfragment.ui.main.main.mobile_detail.MobileDetailActivity
 import kotlinx.android.synthetic.main.fragment_favorite.*
 
@@ -34,13 +33,14 @@ import kotlinx.android.synthetic.main.fragment_favorite.*
 //}
 
 
-class FavoriteListFragment : Fragment(), MobilePresenterInterface {
+class FavoriteListFragment(i: Int) : Fragment(), MobilePresenterInterface {
 
     companion object {
         // tell that what value should send when navigate
-        fun newInstance(): FavoriteListFragment = FavoriteListFragment()
+        fun newInstance(i: Int): FavoriteListFragment = FavoriteListFragment(i)
     }
 
+    private val sort = Sort(i)
     private val presenter = MobilePresenter(this, MobileManager.getService())
 
     override fun onCreateView(
@@ -63,7 +63,7 @@ class FavoriteListFragment : Fragment(), MobilePresenterInterface {
                MobileDetailActivity.startActivity(context, mobileModel)
             }
         }
-        val sectionPagerAdapter = MobileFavoriteAdapter(mobileModelList, listener)//ส่งlistener
+        val sectionPagerAdapter = MobileFavoriteAdapter(sort.sortBy(mobileModelList), listener)//ส่งlistener
         rvMobileFavoriteList.adapter = sectionPagerAdapter
         rvMobileFavoriteList.layoutManager = LinearLayoutManager(context)
 

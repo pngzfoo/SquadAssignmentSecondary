@@ -9,30 +9,6 @@ import com.example.testfragment.ui.main.main.main.FragmentPresenter
 import com.example.testfragment.ui.main.main.main.IntroPagerAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 
-//class MainActivity : AppCompatActivity() {
-//
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//        setContentView(R.layout.activity_main)
-//        setView()
-//
-//
-//    }
-//
-//    private fun setView() {
-//
-//        val homeList: List<FragmentModel> = listOf(
-//            FragmentModel("Mobile List", MobileListFragment.newInstance()),
-//            FragmentModel("Favorite List", FavoriteListFragment.newInstance())
-//            )
-//        // viewPager คือตัวที่ hold หน้าสองหน้า fragment tab รับ adaptor เข้ามา ต้องการ viewpager
-//        val sectionsPagerAdapter =
-//            SectionsPagerAdapter(homeList, supportFragmentManager)
-//        view_pager.adapter = sectionsPagerAdapter
-//        tabs.setupWithViewPager(view_pager)
-//    }
-//}
-
 class MainActivity : AppCompatActivity(), FragmentInterface {
 
     companion object {
@@ -45,7 +21,7 @@ class MainActivity : AppCompatActivity(), FragmentInterface {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        presenter.getFragment(0)
+        presenter.getFragment(3)
 
 //      dialog for sorting
         sortImageButton.setOnClickListener{
@@ -54,9 +30,9 @@ class MainActivity : AppCompatActivity(), FragmentInterface {
             aBuilder.setSingleChoiceItems(listSort,-1){
                     dialogInterface, i -> run{
                 when(i){
+                    0 -> presenter.getFragment(0)
                     1-> presenter.getFragment(1)
                     2-> presenter.getFragment(2)
-                    3-> presenter.getFragment(3)
                 }
             }
 

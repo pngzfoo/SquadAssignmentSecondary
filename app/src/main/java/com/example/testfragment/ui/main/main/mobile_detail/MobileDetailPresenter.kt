@@ -12,6 +12,8 @@ class MobileDetailPresenter(private val view: MobileDetailInterface) {
             mobileItem.brand ?: "",
             mobileItem.description ?:"",
             mobileItem.price ?: "",
+                mobileItem.rating,
+                mobileItem.id,
              mobileItem.thumbImageURL
         )
     }
