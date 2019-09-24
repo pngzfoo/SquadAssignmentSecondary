@@ -31,6 +31,7 @@ class MobileListFragment : Fragment(), MobilePresenterInterface {
 
     var sort = Sort()
     private val presenter = MobilePresenter(this, MobileManager.getService())
+    private var ml = listOf<MobileModel>()
 //    private val imagePresenter = MobilePicPresenter (this, MobileManager.getService())
 
     override fun onCreateView(
@@ -47,6 +48,7 @@ class MobileListFragment : Fragment(), MobilePresenterInterface {
     }
 
     override fun setMobile(mobileModelList: List<MobileModel>) {
+        ml = mobileModelList
 //        var sort = Sort(mobileModelList)
         val listener = object : MobileItemClickListener {
             override fun onItemClick(mobileModel: MobileModel) {
@@ -90,18 +92,23 @@ class MobileListFragment : Fragment(), MobilePresenterInterface {
 
     }
 
-    fun sortPrice() {
-        presenter.sortPrice()
+    fun getml(): List<MobileModel> {
+        return ml
 
     }
 
-    fun sortReversePrice() {
-        presenter.sortReversePrice()
+    fun sortPrice(testget: List<MobileModel>) {
+        presenter.sortPrice(testget)
 
     }
 
-    fun sortRating() {
-        presenter.sortRating()
+    fun sortReversePrice(testget: List<MobileModel>) {
+        presenter.sortReversePrice(testget)
+
+    }
+
+    fun sortRating(testget: List<MobileModel>) {
+        presenter.sortRating(testget)
 
     }
 

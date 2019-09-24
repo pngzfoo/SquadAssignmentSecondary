@@ -30,46 +30,38 @@ class MainActivity : AppCompatActivity(), FragmentInterface {
 //
 
 
-//        val mobileListFragment = MobileListFragment.newInstance()
-//        val favoriteListFragment = FavoriteListFragment.newInstance()
+        val mobileListFragment = MobileListFragment.newInstance()
+        val favoriteListFragment = FavoriteListFragment.newInstance()
+
         val tabList = listOf(
-            FragmentModel(LIST_MOBILE_TAB_NAME, MobileListFragment.newInstance()),
-            FragmentModel(FAVORITE_LIST_TAB_NAME, FavoriteListFragment.newInstance())
+            FragmentModel(LIST_MOBILE_TAB_NAME, mobileListFragment),
+            FragmentModel(FAVORITE_LIST_TAB_NAME, favoriteListFragment)
         )
         val sectionsPagerAdapter = IntroPagerAdapter(tabList, supportFragmentManager)
         view_pager.adapter = sectionsPagerAdapter
         tabs.setupWithViewPager(view_pager)
 
+
 //      dialog for sorting
         sortImageButton.setOnClickListener {
             val listSort = arrayOf("Price low to high", "Price high to low", "Rating 5-1")
             val aBuilder = AlertDialog.Builder(this@MainActivity)
-            val mainFrag = sectionsPagerAdapter.getItem(0) //เรียกฟังก์ชันแท็ปนั้นมา
+//            val mainFrag = sectionsPagerAdapter.getItem(0)//เรียกฟังก์ชันแท็ปนั้นมา
+//            var testget = listOf<MobileModel>()
+//            if (mainFrag is MobileListFragment) {
+//                 testget = mainFrag.getml()
+//            }
 
+            var testget = mobileListFragment.getml()
             aBuilder.setSingleChoiceItems(listSort, -1) { dialogInterface, i ->
                 run {
-                    //                    mobileListFragment.setInt(i)
                     when (i) {
-                        0 -> {
-                            if (mainFrag is MobileListFragment) {
-                                mainFrag.sortPrice()
-                            }
-                        }
-                        1 -> {
-                            if (mainFrag is MobileListFragment) {
-                                mainFrag.sortReversePrice()
-                            }
-                        }
-                        2 -> {
-                            if (mainFrag is MobileListFragment) {
-                                mainFrag.sortRating()
-                            }
-                        }
+                        0 -> mobileListFragment.sortPrice(testget)
+                        1 -> mobileListFragment.sortReversePrice(testget)
+                        2 -> mobileListFragment.sortRating(testget)
                     }
                 }
-
                 dialogInterface.dismiss()
-
             }
             val aDialog = aBuilder.create()
             aDialog.show()

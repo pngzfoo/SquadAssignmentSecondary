@@ -12,7 +12,7 @@ class MobilePresenter(val view: MobilePresenterInterface, private val service: A
 
     fun getMobileApi() {
         service.getMobileList().enqueue(object : Callback<List<MobileModel>> {
-            override fun onFailure(call: Call<List<MobileModel>>, t: Throwable) { }
+            override fun onFailure(call: Call<List<MobileModel>>, t: Throwable) {}
 
             override fun onResponse(call: Call<List<MobileModel>>, response: Response<List<MobileModel>>) {
                 response.body()?.apply {
@@ -25,51 +25,25 @@ class MobilePresenter(val view: MobilePresenterInterface, private val service: A
         })
     }
 
-    fun sortPrice() {
-        service.getMobileList().enqueue(object : Callback<List<MobileModel>> {
-            override fun onFailure(call: Call<List<MobileModel>>, t: Throwable) {}
+    fun sortPrice(testget: List<MobileModel>) {
+        if (testget.isNotEmpty()) {
+            view.setMobile(testget.sortedBy { it.price })
+        }
 
-            override fun onResponse(call: Call<List<MobileModel>>, response: Response<List<MobileModel>>) {
-                response.body()?.apply {
-                    if (this.isNotEmpty()) {
-                        view.setMobile(this.sortedBy { it.price })
-                    }
-                }
-            }
-
-        })
     }
 
 
-    fun sortReversePrice() {
-        service.getMobileList().enqueue(object : Callback<List<MobileModel>> {
-            override fun onFailure(call: Call<List<MobileModel>>, t: Throwable) {}
-
-            override fun onResponse(call: Call<List<MobileModel>>, response: Response<List<MobileModel>>) {
-                response.body()?.apply {
-                    if (this.isNotEmpty()) {
-                        view.setMobile(this.sortedByDescending { it.price })
-                    }
-                }
-            }
-
-        })
+    fun sortReversePrice(testget: List<MobileModel>) {
+        if (testget.isNotEmpty()) {
+            view.setMobile(testget.sortedByDescending { it.price })
+        }
     }
 
 
-    fun sortRating() {
-        service.getMobileList().enqueue(object : Callback<List<MobileModel>> {
-            override fun onFailure(call: Call<List<MobileModel>>, t: Throwable) {}
-
-            override fun onResponse(call: Call<List<MobileModel>>, response: Response<List<MobileModel>>) {
-                response.body()?.apply {
-                    if (this.isNotEmpty()) {
-                        view.setMobile(this.sortedByDescending { it.price })
-                    }
-                }
-            }
-
-        })
+    fun sortRating(testget: List<MobileModel>) {
+        if (testget.isNotEmpty()) {
+            view.setMobile(testget.sortedBy { it.rating })
+        }
     }
 
 //    fun sortPrice(){
@@ -84,8 +58,6 @@ class MobilePresenter(val view: MobilePresenterInterface, private val service: A
 //    fun sortRating(mobileModelList :List<MobileModel>){
 //        mobileModelList.sortedBy { it.rating }
 //    }
-
-
 
 
 }
