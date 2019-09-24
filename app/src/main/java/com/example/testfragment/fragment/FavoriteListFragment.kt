@@ -71,4 +71,10 @@ class FavoriteListFragment : Fragment(), MobilePresenterInterface {
 
 
     }
+
+    override fun setTestMobile(mobileModelList: List<MobileModel>) {
+
+    }
+
+
 }

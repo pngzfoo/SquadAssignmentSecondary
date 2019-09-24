@@ -32,6 +32,8 @@ class MobileListFragment : Fragment(), MobilePresenterInterface {
     var sort = Sort()
     private val presenter = MobilePresenter(this, MobileManager.getService())
     private var ml = listOf<MobileModel>()
+    private lateinit var sectionPagerAdapter: MobileAdapter
+
 //    private val imagePresenter = MobilePicPresenter (this, MobileManager.getService())
 
     override fun onCreateView(
@@ -58,10 +60,18 @@ class MobileListFragment : Fragment(), MobilePresenterInterface {
 //        var mobilePref:sharedPreference? = context?.let { sharedPreference(it) }
 //        var sortMobileList = setSort()
 //       var sortMobileList = sort.sortBy(mobileModelList)
-        val sectionPagerAdapter = MobileAdapter(mobileModelList, listener)//ส่งlistener
+
+//        setAdapter(ml,listener)
+        sectionPagerAdapter = MobileAdapter(mobileModelList, listener)//ส่งlistener
         rvMobileList.adapter = sectionPagerAdapter
         rvMobileList.layoutManager = LinearLayoutManager(context)
 
+    }
+
+    override fun setTestMobile(mobileModelList: List<MobileModel>) {
+        sectionPagerAdapter.updateData(mobileModelList)
+        sectionPagerAdapter.notifyDataSetChanged()
+//
     }
 
 
@@ -87,9 +97,20 @@ class MobileListFragment : Fragment(), MobilePresenterInterface {
 //        }
 //    }
 
-    fun setInt(choice: Int) {
-        sort.setChoice(choice)
+//    fun setInt(choice: Int) {
+//        sort.setChoice(choice)
+//
+//    }
 
+//    fun setAdapter(mobileModelList: List<MobileModel>, listener:MobileItemClickListener) {
+//        sectionPagerAdapter = MobileAdapter(mobileModelList, listener)//ส่งlistener
+//        rvMobileList.adapter = sectionPagerAdapter
+//        rvMobileList.layoutManager = LinearLayoutManager(context)
+//
+//    }
+
+    fun getMobileAdapter(): MobileAdapter {
+        return sectionPagerAdapter
     }
 
     fun getml(): List<MobileModel> {

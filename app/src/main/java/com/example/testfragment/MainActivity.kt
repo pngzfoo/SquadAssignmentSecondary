@@ -40,12 +40,14 @@ class MainActivity : AppCompatActivity(), FragmentInterface {
         val sectionsPagerAdapter = IntroPagerAdapter(tabList, supportFragmentManager)
         view_pager.adapter = sectionsPagerAdapter
         tabs.setupWithViewPager(view_pager)
+        var checkedItem = 3
 
 
 //      dialog for sorting
         sortImageButton.setOnClickListener {
             val listSort = arrayOf("Price low to high", "Price high to low", "Rating 5-1")
             val aBuilder = AlertDialog.Builder(this@MainActivity)
+
 //            val mainFrag = sectionsPagerAdapter.getItem(0)//เรียกฟังก์ชันแท็ปนั้นมา
 //            var testget = listOf<MobileModel>()
 //            if (mainFrag is MobileListFragment) {
@@ -53,12 +55,20 @@ class MainActivity : AppCompatActivity(), FragmentInterface {
 //            }
 
             var testget = mobileListFragment.getml()
-            aBuilder.setSingleChoiceItems(listSort, -1) { dialogInterface, i ->
-                run {
-                    when (i) {
-                        0 -> mobileListFragment.sortPrice(testget)
-                        1 -> mobileListFragment.sortReversePrice(testget)
-                        2 -> mobileListFragment.sortRating(testget)
+            aBuilder.setSingleChoiceItems(listSort, checkedItem) { dialogInterface, i ->
+                when (i) {
+                    0 -> {
+                        mobileListFragment.sortPrice(testget)
+                        checkedItem = 0
+                    }
+
+                    1 -> {
+                        mobileListFragment.sortReversePrice(testget)
+                        checkedItem = 1
+                    }
+                    2 -> {
+                        mobileListFragment.sortRating(testget)
+                        checkedItem = 2
                     }
                 }
                 dialogInterface.dismiss()

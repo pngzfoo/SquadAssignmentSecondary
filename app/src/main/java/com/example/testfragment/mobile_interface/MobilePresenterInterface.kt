@@ -5,5 +5,6 @@ import com.example.testfragment.model.MobileModel
 interface MobilePresenterInterface {
 
     fun setMobile(mobileModelList: List<MobileModel>)
+    fun setTestMobile(mobileModelList: List<MobileModel>)
 
 }

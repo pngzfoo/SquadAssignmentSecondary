@@ -27,7 +27,7 @@ class MobilePresenter(val view: MobilePresenterInterface, private val service: A
 
     fun sortPrice(testget: List<MobileModel>) {
         if (testget.isNotEmpty()) {
-            view.setMobile(testget.sortedBy { it.price })
+            view.setTestMobile(testget.sortedBy { it.price })
         }
 
     }
@@ -35,14 +35,14 @@ class MobilePresenter(val view: MobilePresenterInterface, private val service: A
 
     fun sortReversePrice(testget: List<MobileModel>) {
         if (testget.isNotEmpty()) {
-            view.setMobile(testget.sortedByDescending { it.price })
+            view.setTestMobile(testget.sortedByDescending { it.price })
         }
     }
 
 
     fun sortRating(testget: List<MobileModel>) {
         if (testget.isNotEmpty()) {
-            view.setMobile(testget.sortedBy { it.rating })
+            view.setTestMobile(testget.sortedBy { it.rating })
         }
     }
 
