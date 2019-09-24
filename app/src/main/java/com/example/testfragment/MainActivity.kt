@@ -3,6 +3,8 @@ package com.example.testfragment
 import android.app.AlertDialog
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.example.testfragment.fragment.FavoriteListFragment
+import com.example.testfragment.fragment.MobileListFragment
 import com.example.testfragment.model.FragmentModel
 import com.example.testfragment.ui.main.main.main.FragmentInterface
 import com.example.testfragment.ui.main.main.main.FragmentPresenter
@@ -16,25 +18,55 @@ class MainActivity : AppCompatActivity(), FragmentInterface {
         const val FAVORITE_LIST_TAB_NAME = "Favorite List"
     }
 
+    //    var int: Int = 0
     private val presenter = FragmentPresenter(this)
+
+//    private lateinit var sectionsPagerAdapter: IntroPagerAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        presenter.getFragment(3)
+        presenter.initView()
+//
+
+
+//        val mobileListFragment = MobileListFragment.newInstance()
+//        val favoriteListFragment = FavoriteListFragment.newInstance()
+        val tabList = listOf(
+            FragmentModel(LIST_MOBILE_TAB_NAME, MobileListFragment.newInstance()),
+            FragmentModel(FAVORITE_LIST_TAB_NAME, FavoriteListFragment.newInstance())
+        )
+        val sectionsPagerAdapter = IntroPagerAdapter(tabList, supportFragmentManager)
+        view_pager.adapter = sectionsPagerAdapter
+        tabs.setupWithViewPager(view_pager)
 
 //      dialog for sorting
-        sortImageButton.setOnClickListener{
-            val listSort = arrayOf("Price low to high","Price high to low","Rating 5-1")
+        sortImageButton.setOnClickListener {
+            val listSort = arrayOf("Price low to high", "Price high to low", "Rating 5-1")
             val aBuilder = AlertDialog.Builder(this@MainActivity)
-            aBuilder.setSingleChoiceItems(listSort,-1){
-                    dialogInterface, i -> run{
-                when(i){
-                    0 -> presenter.getFragment(0)
-                    1-> presenter.getFragment(1)
-                    2-> presenter.getFragment(2)
+            val mainFrag = sectionsPagerAdapter.getItem(0) //เรียกฟังก์ชันแท็ปนั้นมา
+
+            aBuilder.setSingleChoiceItems(listSort, -1) { dialogInterface, i ->
+                run {
+                    //                    mobileListFragment.setInt(i)
+                    when (i) {
+                        0 -> {
+                            if (mainFrag is MobileListFragment) {
+                                mainFrag.sortPrice()
+                            }
+                        }
+                        1 -> {
+                            if (mainFrag is MobileListFragment) {
+                                mainFrag.sortReversePrice()
+                            }
+                        }
+                        2 -> {
+                            if (mainFrag is MobileListFragment) {
+                                mainFrag.sortRating()
+                            }
+                        }
+                    }
                 }
-            }
 
                 dialogInterface.dismiss()
 
@@ -43,13 +75,22 @@ class MainActivity : AppCompatActivity(), FragmentInterface {
             aDialog.show()
 
         }
+
+
     }
 
     // viewPager คือตัวที่ hold หน้าสองหน้า fragment tab รับ adaptor เข้ามา ต้องการ viewpager
-    override fun setFragment(fragmentList: List<FragmentModel>) {
-        val sectionsPagerAdapter = IntroPagerAdapter(fragmentList, supportFragmentManager)
-        view_pager.adapter = sectionsPagerAdapter
-        tabs.setupWithViewPager(view_pager)
+    override fun setFragment() {
+//        val mobileListFragment = MobileListFragment.newInstance()
+//        mobileListFragment.setInt(int)
+//        val favoriteListFragment = FavoriteListFragment.newInstance()
+//        val tabList = listOf(
+//                FragmentModel(MainActivity.LIST_MOBILE_TAB_NAME, mobileListFragment),
+//                FragmentModel(MainActivity.FAVORITE_LIST_TAB_NAME, favoriteListFragment)
+//        )
+//        val sectionsPagerAdapter = IntroPagerAdapter(tabList, supportFragmentManager)
+//        view_pager.adapter = sectionsPagerAdapter
+//        tabs.setupWithViewPager(view_pager)
     }
 
 }

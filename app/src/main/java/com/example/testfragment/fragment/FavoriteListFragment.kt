@@ -33,15 +33,15 @@ import kotlinx.android.synthetic.main.fragment_favorite.*
 //}
 
 
-class FavoriteListFragment(i: Int) : Fragment(), MobilePresenterInterface {
+class FavoriteListFragment : Fragment(), MobilePresenterInterface {
 
     companion object {
         // tell that what value should send when navigate
-        fun newInstance(i: Int): FavoriteListFragment = FavoriteListFragment(i)
+        fun newInstance(): FavoriteListFragment = FavoriteListFragment()
     }
 
-    private val sort = Sort(i)
-    private val presenter = MobilePresenter(this, MobileManager.getService())
+    private val sort = Sort()
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -53,6 +53,7 @@ class FavoriteListFragment(i: Int) : Fragment(), MobilePresenterInterface {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val presenter = MobilePresenter(this, MobileManager.getService())
         presenter.getMobileApi()
     }
 

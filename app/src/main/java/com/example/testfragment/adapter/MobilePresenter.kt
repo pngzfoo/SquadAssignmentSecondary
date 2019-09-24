@@ -25,5 +25,67 @@ class MobilePresenter(val view: MobilePresenterInterface, private val service: A
         })
     }
 
+    fun sortPrice() {
+        service.getMobileList().enqueue(object : Callback<List<MobileModel>> {
+            override fun onFailure(call: Call<List<MobileModel>>, t: Throwable) {}
+
+            override fun onResponse(call: Call<List<MobileModel>>, response: Response<List<MobileModel>>) {
+                response.body()?.apply {
+                    if (this.isNotEmpty()) {
+                        view.setMobile(this.sortedBy { it.price })
+                    }
+                }
+            }
+
+        })
+    }
+
+
+    fun sortReversePrice() {
+        service.getMobileList().enqueue(object : Callback<List<MobileModel>> {
+            override fun onFailure(call: Call<List<MobileModel>>, t: Throwable) {}
+
+            override fun onResponse(call: Call<List<MobileModel>>, response: Response<List<MobileModel>>) {
+                response.body()?.apply {
+                    if (this.isNotEmpty()) {
+                        view.setMobile(this.sortedByDescending { it.price })
+                    }
+                }
+            }
+
+        })
+    }
+
+
+    fun sortRating() {
+        service.getMobileList().enqueue(object : Callback<List<MobileModel>> {
+            override fun onFailure(call: Call<List<MobileModel>>, t: Throwable) {}
+
+            override fun onResponse(call: Call<List<MobileModel>>, response: Response<List<MobileModel>>) {
+                response.body()?.apply {
+                    if (this.isNotEmpty()) {
+                        view.setMobile(this.sortedByDescending { it.price })
+                    }
+                }
+            }
+
+        })
+    }
+
+//    fun sortPrice(){
+//        mobileModelList.sortedBy { it.price }
+//    }
+//
+//    fun sortReversePrice(mobileModelList :List<MobileModel>){
+//        mobileModelList.sortedByDescending { it.price }
+//
+//    }
+//
+//    fun sortRating(mobileModelList :List<MobileModel>){
+//        mobileModelList.sortedBy { it.rating }
+//    }
+
+
+
 
 }

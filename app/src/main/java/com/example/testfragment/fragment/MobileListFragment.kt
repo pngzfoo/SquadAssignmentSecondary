@@ -21,15 +21,15 @@ import kotlinx.android.synthetic.main.fragment_main.*
  * A placeholder fragment containing a simple view.
  */
 
-class MobileListFragment(i : Int) : Fragment(), MobilePresenterInterface {
+class MobileListFragment : Fragment(), MobilePresenterInterface {
 
     companion object {
         // tell that what value should send when navigate
-        fun newInstance(i: Int): MobileListFragment = MobileListFragment(i)
+        fun newInstance(): MobileListFragment = MobileListFragment()
 
     }
 
-    private val sort = Sort(i)
+    var sort = Sort()
     private val presenter = MobilePresenter(this, MobileManager.getService())
 //    private val imagePresenter = MobilePicPresenter (this, MobileManager.getService())
 
@@ -47,25 +47,62 @@ class MobileListFragment(i : Int) : Fragment(), MobilePresenterInterface {
     }
 
     override fun setMobile(mobileModelList: List<MobileModel>) {
+//        var sort = Sort(mobileModelList)
         val listener = object : MobileItemClickListener {
             override fun onItemClick(mobileModel: MobileModel) {
-               MobileDetailActivity.startActivity(context, mobileModel)
+                MobileDetailActivity.startActivity(context, mobileModel)
             }
         }
 //        var mobilePref:sharedPreference? = context?.let { sharedPreference(it) }
-        var sortMobileList = sort.sortBy(mobileModelList)
-        val sectionPagerAdapter = MobileAdapter(sortMobileList, listener)//ส่งlistener
+//        var sortMobileList = setSort()
+//       var sortMobileList = sort.sortBy(mobileModelList)
+        val sectionPagerAdapter = MobileAdapter(mobileModelList, listener)//ส่งlistener
         rvMobileList.adapter = sectionPagerAdapter
         rvMobileList.layoutManager = LinearLayoutManager(context)
 
     }
-//  เอาไว้เซ็ทอาเรที่ซอทส่งไปหาที่อื่น
-//    fun  setsort(sorttype : Int){
+
+
+//    fun setSort(choice: Int,mobileModelList: List<MobileModel>): List<MobileModel> {
+////        sort.setChoice(choice)
+//        return when (choice) {
+//            0 -> mobileModelList.sortedBy { it.price }
+//            1 -> mobileModelList.sortedByDescending { it.price }
+//            2 -> mobileModelList.sortedBy { it.rating }
+//
+//            else -> mobileModelList
+//        }
+//
 //
 //    }
+//    fun setInt(choice: Int): Int {
+////        sort.setChoice(choice)
+//        return when (choice) {
+//            0 -> 0
+//            1 -> 1
+//            2 -> 2
+//            else -> 3
+//        }
+//    }
 
+    fun setInt(choice: Int) {
+        sort.setChoice(choice)
 
+    }
 
+    fun sortPrice() {
+        presenter.sortPrice()
 
+    }
+
+    fun sortReversePrice() {
+        presenter.sortReversePrice()
+
+    }
+
+    fun sortRating() {
+        presenter.sortRating()
+
+    }
 
 }
