@@ -13,7 +13,6 @@ import com.example.testfragment.mobile_interface.MobileItemClickListener
 import com.example.testfragment.mobile_interface.MobilePresenterInterface
 import com.example.testfragment.model.MobileModel
 import com.example.testfragment.service.MobileManager
-import com.example.testfragment.ui.main.Sort
 import com.example.testfragment.ui.main.main.mobile_detail.MobileDetailActivity
 import kotlinx.android.synthetic.main.fragment_favorite.*
 
@@ -40,7 +39,7 @@ class FavoriteListFragment : Fragment(), MobilePresenterInterface {
         fun newInstance(): FavoriteListFragment = FavoriteListFragment()
     }
 
-    private val sort = Sort()
+
 
 
     override fun onCreateView(
@@ -64,7 +63,7 @@ class FavoriteListFragment : Fragment(), MobilePresenterInterface {
                MobileDetailActivity.startActivity(context, mobileModel)
             }
         }
-        val sectionPagerAdapter = MobileFavoriteAdapter(sort.sortBy(mobileModelList), listener)//ส่งlistener
+        val sectionPagerAdapter = MobileFavoriteAdapter(mobileModelList, listener)//ส่งlistener
         rvMobileFavoriteList.adapter = sectionPagerAdapter
         rvMobileFavoriteList.layoutManager = LinearLayoutManager(context)
 

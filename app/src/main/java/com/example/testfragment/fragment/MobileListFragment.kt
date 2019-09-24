@@ -13,7 +13,6 @@ import com.example.testfragment.mobile_interface.MobileItemClickListener
 import com.example.testfragment.mobile_interface.MobilePresenterInterface
 import com.example.testfragment.model.MobileModel
 import com.example.testfragment.service.MobileManager
-import com.example.testfragment.ui.main.Sort
 import com.example.testfragment.ui.main.main.mobile_detail.MobileDetailActivity
 import kotlinx.android.synthetic.main.fragment_main.*
 
@@ -29,7 +28,7 @@ class MobileListFragment : Fragment(), MobilePresenterInterface {
 
     }
 
-    var sort = Sort()
+
     private val presenter = MobilePresenter(this, MobileManager.getService())
     private var ml = listOf<MobileModel>()
     private lateinit var sectionPagerAdapter: MobileAdapter
