@@ -1,17 +1,22 @@
 package com.example.testfragment.adapter
 
 
-//import com.example.testfragment.sharedPreference
+//import com.example.testfragment.MyCustomSharedPreference
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.testfragment.MyCustomSharedPreference
 import com.example.testfragment.R
 import com.example.testfragment.mobile_interface.MobileItemClickListener
 import com.example.testfragment.model.MobileModel
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.mobile_list_card_holder.view.*
 
-class MobileListHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
+class MobileListHolder(
+    parent: ViewGroup,
+    private var mobilePref: MyCustomSharedPreference?,
+    val favArrayList: ArrayList<MobileModel>
+) : RecyclerView.ViewHolder(
     LayoutInflater.from(parent.context).inflate(R.layout.mobile_list_card_holder, parent, false)
 ) {
 
@@ -32,25 +37,26 @@ class MobileListHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
         itemView.mobileRating.text = "Rating: ${model.rating.toString()}"
 
 
-//        fun <T> mutableSetOf(): MutableSet<T>
-//        val ms = setOf(model.name,model.price,model.brand,model.description,model.rating)
-//        var modelPref : sharedPreference? = context?.let {sharedPreference(it)}
 
-
+        if (model.check) {
+            itemView.heartImageButton.setBackgroundResource(R.drawable.cute_fill_heart_button)
+        } else {
+            itemView.heartImageButton.setBackgroundResource(R.drawable.cute_heart_button)
+        }
         itemView.heartImageButton.setOnClickListener {
             if (model.check == false) {
                 itemView.heartImageButton.setBackgroundResource(R.drawable.cute_heart_button)
                 model.check = true
-//                mobilePref?.putStr(model.id,"${model.check}")
-//                println(mobilePref?.getstr("${model.id}",MobileModel::class.java))
+                println(mobilePref?.getModelArrayList("TEST"))
+
 
             } else if (model.check == true) {
                 itemView.heartImageButton.setBackgroundResource(R.drawable.cute_fill_heart_button)
                 model.check = false
-//                mobilePref?.putStr(model.id,"${model.check}")
+                this.favArrayList.add(model)
+                mobilePref?.putModelShared(favArrayList)
 
-//                mobilePref?.deleteStr("1")
-//                var user_id = sharedPref.sharedPreference.getInt("userId", -1);
+
             }
         }
 

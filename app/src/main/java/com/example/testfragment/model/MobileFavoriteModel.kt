@@ -5,31 +5,31 @@ import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class MobileModel(
+data class MobileFavoriteModel(
 
     @SerializedName("brand")
     val brand: String,
 
-    @SerializedName("thumbImageURL")
-    val thumbImageURL: String,
+    @SerializedName("check")
+    var check: Boolean,
 
     @SerializedName("description")
     val description: String,
 
-    @SerializedName("rating")
-    val rating: Double?,
-
     @SerializedName("id")
-    val id: Int,
-
-    @SerializedName("price")
-    val price: String,
+    var id: Int,
 
     @SerializedName("name")
     val name: String,
 
+    @SerializedName("price")
+    val price: String,
 
-    var check: Boolean = false
+    @SerializedName("rating")
+    val rating: Double?,
+
+    @SerializedName("thumbImageURL")
+    val thumbImageURL: String
 
 
 ) : Parcelable

@@ -1,14 +1,10 @@
 package com.example.testfragment.adapter
 
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentPagerAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.testfragment.MyCustomSharedPreference
 import com.example.testfragment.mobile_interface.MobileItemClickListener
-import com.example.testfragment.model.FragmentModel
 import com.example.testfragment.model.MobileModel
-import com.example.testfragment.sharedPreference
 
 //class SectionsPagerAdapter(private val fmList: List<FragmentModel>, fm: FragmentManager) : FragmentPagerAdapter(fm) {
 //
@@ -31,12 +27,13 @@ import com.example.testfragment.sharedPreference
 
 class SectionsPagerAdapter(
     private val mobileList: List<MobileModel>
-    , private val listener: MobileItemClickListener
-//    private var mobilePref: sharedPreference?
+    , private val listener: MobileItemClickListener,
+    private var mobilePref: MyCustomSharedPreference,
+    private val favArrayList: ArrayList<MobileModel> = arrayListOf()//
     ) : RecyclerView.Adapter<MobileListHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MobileListHolder {
-        return MobileListHolder(parent)
+        return MobileListHolder(parent, mobilePref, favArrayList)
     }
 
     override fun getItemCount(): Int = mobileList.count()

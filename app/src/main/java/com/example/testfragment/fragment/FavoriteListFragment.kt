@@ -6,13 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.testfragment.MyCustomSharedPreference
 import com.example.testfragment.R
 import com.example.testfragment.adapter.MobileFavoriteAdapter
-import com.example.testfragment.adapter.MobilePresenter
+import com.example.testfragment.adapter.MobileFavoritePresenter
+import com.example.testfragment.mobile_interface.MobileFavoritePresenterInterface
 import com.example.testfragment.mobile_interface.MobileItemClickListener
-import com.example.testfragment.mobile_interface.MobilePresenterInterface
+import com.example.testfragment.model.MobileFavoriteModel
 import com.example.testfragment.model.MobileModel
-import com.example.testfragment.service.MobileManager
 import com.example.testfragment.ui.main.main.mobile_detail.MobileDetailActivity
 import kotlinx.android.synthetic.main.fragment_favorite.*
 
@@ -32,15 +33,12 @@ import kotlinx.android.synthetic.main.fragment_favorite.*
 //}
 
 
-class FavoriteListFragment : Fragment(), MobilePresenterInterface {
+class FavoriteListFragment : Fragment(), MobileFavoritePresenterInterface {
 
     companion object {
         // tell that what value should send when navigate
         fun newInstance(): FavoriteListFragment = FavoriteListFragment()
     }
-
-
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -50,28 +48,32 @@ class FavoriteListFragment : Fragment(), MobilePresenterInterface {
         return inflater.inflate(R.layout.fragment_favorite, container, false)
     }
 
+    lateinit var presenter: MobileFavoritePresenter
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val presenter = MobilePresenter(this, MobileManager.getService())
-        presenter.getMobileApi()
+        context?.let { context ->
+            var customShared = MyCustomSharedPreference(context)
+            presenter = MobileFavoritePresenter(this, customShared)
+        }
+        presenter.getMobileFavorite()
     }
 
-    override fun setMobile(mobileModelList: List<MobileModel>) {
+    override fun setMobile(mobileFavModelList: List<MobileFavoriteModel>) {
 
         val listener = object : MobileItemClickListener {
             override fun onItemClick(mobileModel: MobileModel) {
                MobileDetailActivity.startActivity(context, mobileModel)
             }
+
+            override fun onHeartClick(mobileModel: MobileModel) {
+
+            }
         }
-        val sectionPagerAdapter = MobileFavoriteAdapter(mobileModelList, listener)//ส่งlistener
+        val sectionPagerAdapter = MobileFavoriteAdapter(mobileFavModelList, listener)//ส่งlistener
         rvMobileFavoriteList.adapter = sectionPagerAdapter
         rvMobileFavoriteList.layoutManager = LinearLayoutManager(context)
 
 
-
-    }
-
-    override fun setTestMobile(mobileModelList: List<MobileModel>) {
 
     }
 
