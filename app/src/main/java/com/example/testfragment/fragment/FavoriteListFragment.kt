@@ -12,26 +12,9 @@ import com.example.testfragment.adapter.MobileFavoriteAdapter
 import com.example.testfragment.adapter.MobileFavoritePresenter
 import com.example.testfragment.mobile_interface.MobileFavoritePresenterInterface
 import com.example.testfragment.mobile_interface.MobileItemClickListener
-import com.example.testfragment.model.MobileFavoriteModel
 import com.example.testfragment.model.MobileModel
 import com.example.testfragment.ui.main.main.mobile_detail.MobileDetailActivity
 import kotlinx.android.synthetic.main.fragment_favorite.*
-
-//class FavoriteListFragment : Fragment() {
-//
-//    //companion object ทำการประกาศ object declaration ใน class ด้วย keyword ชื่อว่า companion
-////โดยที่ class หลักสามารถเรียกใช้ method ใน object ได้โดยตรง
-//    companion object {
-//        // ส่งหน้าตัวเอง
-//        fun newInstance(): FavoriteListFragment =
-//            FavoriteListFragment()
-//    }
-//
-//    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-//        return inflater.inflate(R.layout.fragment_favorite, container, false)
-//    }
-//}
-
 
 class FavoriteListFragment : Fragment(), MobileFavoritePresenterInterface {
 
@@ -48,17 +31,21 @@ class FavoriteListFragment : Fragment(), MobileFavoritePresenterInterface {
         return inflater.inflate(R.layout.fragment_favorite, container, false)
     }
 
-    lateinit var presenter: MobileFavoritePresenter
+    var model: MobileModel? = null
+    lateinit var sectionPagerAdapter: MobileFavoriteAdapter
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         context?.let { context ->
             var customShared = MyCustomSharedPreference(context)
-            presenter = MobileFavoritePresenter(this, customShared)
+            var presenter = MobileFavoritePresenter(this, customShared)
+            presenter.getMobileFavorite()
         }
-        presenter.getMobileFavorite()
+
     }
 
-    override fun setMobile(mobileFavModelList: List<MobileFavoriteModel>) {
+    override fun setMobile(mobileFavModelList: List<MobileModel>) {
+
 
         val listener = object : MobileItemClickListener {
             override fun onItemClick(mobileModel: MobileModel) {
@@ -66,15 +53,40 @@ class FavoriteListFragment : Fragment(), MobileFavoritePresenterInterface {
             }
 
             override fun onHeartClick(mobileModel: MobileModel) {
+//                setModelFav(mobileModel)
+            }
 
+            override fun onHeartClickDelete(mobileModel: MobileModel) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
             }
         }
-        val sectionPagerAdapter = MobileFavoriteAdapter(mobileFavModelList, listener)//ส่งlistener
+        sectionPagerAdapter = MobileFavoriteAdapter(mobileFavModelList, listener)//ส่งlistener
         rvMobileFavoriteList.adapter = sectionPagerAdapter
         rvMobileFavoriteList.layoutManager = LinearLayoutManager(context)
 
 
 
+    }
+
+//      override fun setTestMobile(mobileModelList: List<MobileModel>) {
+//        sectionPagerAdapter.updateData(mobileModelList)
+//        sectionPagerAdapter.notifyDataSetChanged()
+////
+//    }
+
+    override fun setSecMobile(mobileList: List<MobileModel>) {
+        sectionPagerAdapter.updateData(mobileList)
+        sectionPagerAdapter.notifyDataSetChanged()
+    }
+
+    fun setModelFav(model: MobileModel) {
+        sectionPagerAdapter.add(model)
+        sectionPagerAdapter.notifyDataSetChanged()
+    }
+
+    fun setModelDelete(model: MobileModel) {
+        sectionPagerAdapter.delete(model)
+        sectionPagerAdapter.notifyDataSetChanged()
     }
 
 

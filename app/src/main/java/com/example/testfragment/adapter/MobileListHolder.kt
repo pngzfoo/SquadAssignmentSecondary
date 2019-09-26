@@ -45,23 +45,25 @@ class MobileListHolder(
         }
         itemView.heartImageButton.setOnClickListener {
             if (model.check == false) {
-                itemView.heartImageButton.setBackgroundResource(R.drawable.cute_heart_button)
+                itemView.heartImageButton.setBackgroundResource(R.drawable.cute_fill_heart_button)
                 model.check = true
-                println(mobilePref?.getModelArrayList("TEST"))
+                favArrayList.add(model)
+                mobilePref?.putModelShared(favArrayList)
+                listener.onHeartClick(model)
 
 
             } else if (model.check == true) {
-                itemView.heartImageButton.setBackgroundResource(R.drawable.cute_fill_heart_button)
+                itemView.heartImageButton.setBackgroundResource(R.drawable.cute_heart_button)
                 model.check = false
-                this.favArrayList.add(model)
-                mobilePref?.putModelShared(favArrayList)
-
-
+                listener.onHeartClickDelete(model)
+                mobilePref?.deleteStr(model.id)
+//                println(mobilePref?.getModelArrayList("TEST"))
+//
             }
+
+
         }
 
-
     }
-
 }
 

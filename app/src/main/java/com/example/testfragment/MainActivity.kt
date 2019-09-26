@@ -5,13 +5,15 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.testfragment.fragment.FavoriteListFragment
 import com.example.testfragment.fragment.MobileListFragment
+import com.example.testfragment.mobile_interface.MainInterface
 import com.example.testfragment.model.FragmentModel
+import com.example.testfragment.model.MobileModel
 import com.example.testfragment.ui.main.main.main.FragmentInterface
 import com.example.testfragment.ui.main.main.main.FragmentPresenter
 import com.example.testfragment.ui.main.main.main.IntroPagerAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity(), FragmentInterface {
+class MainActivity : AppCompatActivity(), FragmentInterface, MainInterface {
 
     companion object {
         const val LIST_MOBILE_TAB_NAME = "Mobile List"
@@ -20,6 +22,8 @@ class MainActivity : AppCompatActivity(), FragmentInterface {
 
     //    var int: Int = 0
     private val presenter = FragmentPresenter(this)
+    var tabList = listOf<FragmentModel>()
+
 
 //    private lateinit var sectionsPagerAdapter: IntroPagerAdapter
 
@@ -30,10 +34,13 @@ class MainActivity : AppCompatActivity(), FragmentInterface {
 //
 
 
-        val mobileListFragment = MobileListFragment.newInstance()
+        val mobileListFragment = MobileListFragment.newInstance().apply { setFavMobileFrag(this@MainActivity) }
         val favoriteListFragment = FavoriteListFragment.newInstance()
 
-        val tabList = listOf(
+//        favoriteListFragment.presenter
+
+
+        tabList = listOf(
             FragmentModel(LIST_MOBILE_TAB_NAME, mobileListFragment),
             FragmentModel(FAVORITE_LIST_TAB_NAME, favoriteListFragment)
         )
@@ -93,6 +100,26 @@ class MainActivity : AppCompatActivity(), FragmentInterface {
 //        val sectionsPagerAdapter = IntroPagerAdapter(tabList, supportFragmentManager)
 //        view_pager.adapter = sectionsPagerAdapter
 //        tabs.setupWithViewPager(view_pager)
+    }
+
+//    override fun getFav(model: MobileModel) {
+//        var fragment = tabList[1].fragment as FavoriteListFragment
+//        fragment.setModelFav(model)
+//
+//    }
+
+    //    fun getSmth(model: MobileModel){
+//
+//    }
+//
+    override fun getFav(model: MobileModel) {
+        var favFrag = tabList[1].fragment as FavoriteListFragment
+        favFrag.setModelFav(model)
+    }
+
+    override fun getDelete(model: MobileModel) {
+        var favFrag = tabList[1].fragment as FavoriteListFragment
+        favFrag.setModelDelete(model)
     }
 
 }

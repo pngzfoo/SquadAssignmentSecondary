@@ -6,5 +6,6 @@ interface MobileItemClickListener {
 
     fun onItemClick(mobileModel: MobileModel)
     fun onHeartClick(mobileModel: MobileModel)//
+    fun onHeartClickDelete(mobileModel: MobileModel)
 
 }

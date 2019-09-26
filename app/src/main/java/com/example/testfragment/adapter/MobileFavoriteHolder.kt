@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.testfragment.R
 import com.example.testfragment.mobile_interface.MobileItemClickListener
-import com.example.testfragment.model.MobileFavoriteModel
+import com.example.testfragment.model.MobileModel
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.mobile_favorite_card_holder.view.*
 
@@ -16,7 +16,7 @@ class MobileFavoriteHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
 
 //    lateinit var model:MobileFavoriteModel
 
-    fun bind(model: MobileFavoriteModel, listener: MobileItemClickListener) {
+    fun bind(model: MobileModel, listener: MobileItemClickListener) {
 //    fun bind(model: MobileModel) {
 
 
@@ -31,6 +31,7 @@ class MobileFavoriteHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
         itemView.nameFav.text = model.name
         itemView.priceFav.text = "Price: $${model.price}"
         itemView.ratingFav.text = "Rating: ${model.rating.toString()}"
+
 
 //        this.model.check = model.check
 //        this.model.id = model.id

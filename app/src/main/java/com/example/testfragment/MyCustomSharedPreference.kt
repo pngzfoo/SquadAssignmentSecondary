@@ -5,6 +5,7 @@ import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
 import com.example.testfragment.model.MobileModel
 import com.google.gson.GsonBuilder
+import java.util.concurrent.CopyOnWriteArrayList
 
 
 class MyCustomSharedPreference(context: Context) {
@@ -20,19 +21,65 @@ class MyCustomSharedPreference(context: Context) {
         editor.putString("TEST", mobileModelString).commit()
     }
 
-    fun getModelArrayList(key: String): String? {
+    fun getModelArrayList(key: String): List<MobileModel> {
         val value = sharedPreference.getString(key, null)
+        if (value != null) {
+            gson.fromJson(value, Array<MobileModel>::class.java).toList().apply {
+                return this
+            }
+        }
 
-        return value //แปลงอาเรตรงนี้
+        return listOf()//แปลงอาเรตรงนี้
     }
 
-    fun deleteStr(key: String) {
-        editor.remove(key)
-        editor.commit()
+    fun getFavModelArrayList(key: String): List<MobileModel> {
+        val value = sharedPreference.getString(key, null)
+        if (value != null) {
+            gson.fromJson(value, Array<MobileModel>::class.java).toList().apply {
+                return this
+            }
+        }
+
+        return listOf()//แปลงอาเรตรงนี้
     }
 
+    fun deleteStr(key: Int) {
 
+        val mList = CopyOnWriteArrayList<MobileModel>()
+        val mobileModelString: String
+        val value = sharedPreference.getString("TEST", null)
+        if (value != null) {
+//            var mList: MutableList<MobileFavoriteModel> = mutableListOf<MobileFavoriteModel>()
+            gson.fromJson(value, Array<MobileModel>::class.java).toList().apply {
+                for (i in this) {
+                    mList.add(i)
+                }
+                for (j in mList) {
+                    if (j.id == key) {
+////                        i as String
+                        mList.remove(j)
+//                        editor.remove(i)
+//                        editor.commit()
+                    }
+
+                }
+            }
+            mobileModelString = gson.toJson(mList)
+            editor.putString("TEST", mobileModelString).commit()
+
+        }
+
+    }
 }
+
+//class TempClass {
+//    var myList: MutableList<Int> = mutableListOf<Int>()
+//    fun doSomething() {
+//        // myList = ArrayList<Int>() // initializer is redundant
+//        myList.add(10)
+//        myList.remove(10)
+//    }
+//}
 
 
 

@@ -12,9 +12,9 @@ import com.example.testfragment.MyCustomSharedPreference
 import com.example.testfragment.R
 import com.example.testfragment.adapter.MobileAdapter
 import com.example.testfragment.adapter.MobilePresenter
+import com.example.testfragment.mobile_interface.MainInterface
 import com.example.testfragment.mobile_interface.MobileItemClickListener
 import com.example.testfragment.mobile_interface.MobilePresenterInterface
-import com.example.testfragment.model.MobileFavoriteModel
 import com.example.testfragment.model.MobileModel
 import com.example.testfragment.service.MobileManager
 import com.example.testfragment.ui.main.main.mobile_detail.MobileDetailActivity
@@ -26,6 +26,7 @@ import kotlinx.android.synthetic.main.fragment_main.*
  */
 
 class MobileListFragment : Fragment(), MobilePresenterInterface {
+
 
     companion object {
         // tell that what value should send when navigate
@@ -40,9 +41,19 @@ class MobileListFragment : Fragment(), MobilePresenterInterface {
     private val presenter = MobilePresenter(this, MobileManager.getService())
     private var mobileList = listOf<MobileModel>()
     private lateinit var sectionPagerAdapter: MobileAdapter
+    private var addFavListener: MainInterface? = null
+    private var listenerF: MobilePresenterInterface? = null
 //    private lateinit var customSharedPreference : MyCustomSharedPreference
 
 //    private val imagePresenter = MobilePicPresenter (this, MobileManager.getService())
+
+    fun setFavMobileFrag(addFavListener: MainInterface) {
+        this.addFavListener = addFavListener
+    }
+
+//    fun getFavMobileFrag() {
+//        return model
+//    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -68,7 +79,11 @@ class MobileListFragment : Fragment(), MobilePresenterInterface {
             }
 
             override fun onHeartClick(mobileModel: MobileModel) {
+                addFavListener?.getFav(mobileModel)
+            }
 
+            override fun onHeartClickDelete(mobileModel: MobileModel) {
+                addFavListener?.getDelete(mobileModel)
             }
         }
 //        var mobilePref:MyCustomSharedPreference? = context?.let { MyCustomSharedPreference(it) }
@@ -82,6 +97,7 @@ class MobileListFragment : Fragment(), MobilePresenterInterface {
         sectionPagerAdapter = MobileAdapter(mobileModelList, listener, customSharedPreference)//ส่งlistener
         rvMobileList.adapter = sectionPagerAdapter
         rvMobileList.layoutManager = LinearLayoutManager(context)
+//        sectionPagerAdapter.addListener(addFavListener)
 
     }
 
@@ -91,6 +107,10 @@ class MobileListFragment : Fragment(), MobilePresenterInterface {
 //
     }
 
+
+    override fun getModel(model: MobileModel) {
+
+    }
 
 //    fun setSort(choice: Int,mobileModelList: List<MobileModel>): List<MobileModel> {
 ////        sort.setChoice(choice)
@@ -146,12 +166,12 @@ class MobileListFragment : Fragment(), MobilePresenterInterface {
 
     }
 
-    fun getShared(): List<MobileFavoriteModel> {
+    fun getShared(): List<MobileModel> {
         sharedPreference = context!!.getSharedPreferences("FAVORITE_FRAGMENT", Context.MODE_PRIVATE)
-        val str: List<MobileFavoriteModel>
+//        val str: List<MobileFavoriteModel>
         val value = sharedPreference.getString("TEST", null)
         if (value != null) {
-            return gson.fromJson(value, Array<MobileFavoriteModel>::class.java).toList()
+            return gson.fromJson(value, Array<MobileModel>::class.java).toList()
         }
         return listOf()
     }
