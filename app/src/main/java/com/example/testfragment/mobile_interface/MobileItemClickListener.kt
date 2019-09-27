@@ -5,7 +5,6 @@ import com.example.testfragment.model.MobileModel
 interface MobileItemClickListener {
 
     fun onItemClick(mobileModel: MobileModel)
-    fun onHeartClick(mobileModel: MobileModel)//
+    fun onHeartClick(mobileModel: List<MobileModel>)//
     fun onHeartClickDelete(mobileModel: MobileModel)
-
 }

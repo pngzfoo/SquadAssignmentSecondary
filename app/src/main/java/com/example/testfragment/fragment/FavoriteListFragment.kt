@@ -33,13 +33,15 @@ class FavoriteListFragment : Fragment(), MobileFavoritePresenterInterface {
 
     var model: MobileModel? = null
     lateinit var sectionPagerAdapter: MobileFavoriteAdapter
+    var presenter = MobileFavoritePresenter(this)
+
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         context?.let { context ->
-            var customShared = MyCustomSharedPreference(context)
-            var presenter = MobileFavoritePresenter(this, customShared)
-            presenter.getMobileFavorite()
+            var myCustomSharedPref = MyCustomSharedPreference(context)
+            presenter.getMobileFavorite(myCustomSharedPref)
         }
 
     }
@@ -52,42 +54,72 @@ class FavoriteListFragment : Fragment(), MobileFavoritePresenterInterface {
                MobileDetailActivity.startActivity(context, mobileModel)
             }
 
-            override fun onHeartClick(mobileModel: MobileModel) {
-//                setModelFav(mobileModel)
+            override fun onHeartClick(mobileModel: List<MobileModel>) {
+//
             }
 
             override fun onHeartClickDelete(mobileModel: MobileModel) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
             }
         }
-        sectionPagerAdapter = MobileFavoriteAdapter(mobileFavModelList, listener)//ส่งlistener
+        sectionPagerAdapter = MobileFavoriteAdapter(ArrayList(mobileFavModelList), listener)//ส่งlistener
         rvMobileFavoriteList.adapter = sectionPagerAdapter
         rvMobileFavoriteList.layoutManager = LinearLayoutManager(context)
 
 
 
     }
-
-//      override fun setTestMobile(mobileModelList: List<MobileModel>) {
-//        sectionPagerAdapter.updateData(mobileModelList)
-//        sectionPagerAdapter.notifyDataSetChanged()
-////
+//
+//    override fun setMobileSecondary(mobileList: List<MobileModel>,checkedItem:Int) {
+//        if(mobileList != null){
+//            when (checkedItem) {
+//                0 -> {
+//                    presenter.sortPrice(mobileList)
+//                }
+//
+//                1 -> {
+//                    presenter.sortReversePrice(mobileList)
+//                }
+//                2 -> {
+//                    presenter.sortRating(mobileList)
+//                }
+//                3 -> { setMobileThird(mobileList)
+//
+//                }
+//
+//            }
+//        }
+//
+//
 //    }
 
-    override fun setSecMobile(mobileList: List<MobileModel>) {
+    override fun setMobileThird(mobileList: List<MobileModel>) {
         sectionPagerAdapter.updateData(mobileList)
         sectionPagerAdapter.notifyDataSetChanged()
+
     }
 
-    fun setModelFav(model: MobileModel) {
-        sectionPagerAdapter.add(model)
-        sectionPagerAdapter.notifyDataSetChanged()
+    fun sortPrice() {
+        var dataMobileFavoriteList = sectionPagerAdapter.getMobileFavoriteList()
+        var dataUpdate = presenter.sortPrice(dataMobileFavoriteList)
+        setMobileThird(dataUpdate)
     }
 
-    fun setModelDelete(model: MobileModel) {
-        sectionPagerAdapter.delete(model)
-        sectionPagerAdapter.notifyDataSetChanged()
+    fun sortReversePrice() {
+        var dataMobileFavoriteList = sectionPagerAdapter.getMobileFavoriteList()
+        var dataUpdate = presenter.sortReversePrice(dataMobileFavoriteList)
+        setMobileThird(dataUpdate)
+
     }
+
+    fun sortRating() {
+        var dataMobileFavoriteList = sectionPagerAdapter.getMobileFavoriteList()
+        var dataUpdate = presenter.sortRating(dataMobileFavoriteList)
+        setMobileThird(dataUpdate)
+
+    }
+
+
 
 
 }

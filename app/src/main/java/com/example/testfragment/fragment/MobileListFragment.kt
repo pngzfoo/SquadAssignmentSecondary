@@ -78,12 +78,12 @@ class MobileListFragment : Fragment(), MobilePresenterInterface {
                 MobileDetailActivity.startActivity(context, mobileModel)
             }
 
-            override fun onHeartClick(mobileModel: MobileModel) {
-                addFavListener?.getFav(mobileModel)
+            override fun onHeartClick(mobileModel: List<MobileModel>) {
+                addFavListener?.setUpdateData(mobileModel)
             }
 
             override fun onHeartClickDelete(mobileModel: MobileModel) {
-                addFavListener?.getDelete(mobileModel)
+//                addFavListener?.getDelete(mobileModel)
             }
         }
 //        var mobilePref:MyCustomSharedPreference? = context?.let { MyCustomSharedPreference(it) }
@@ -107,46 +107,11 @@ class MobileListFragment : Fragment(), MobilePresenterInterface {
 //
     }
 
-
     override fun getModel(model: MobileModel) {
 
     }
 
-//    fun setSort(choice: Int,mobileModelList: List<MobileModel>): List<MobileModel> {
-////        sort.setChoice(choice)
-//        return when (choice) {
-//            0 -> mobileModelList.sortedBy { it.price }
-//            1 -> mobileModelList.sortedByDescending { it.price }
-//            2 -> mobileModelList.sortedBy { it.rating }
-//
-//            else -> mobileModelList
-//        }
-//
-//
-//    }
-//    fun setInt(choice: Int): Int {
-////        sort.setChoice(choice)
-//        return when (choice) {
-//            0 -> 0
-//            1 -> 1
-//            2 -> 2
-//            else -> 3
-//        }
-//    }
-
-//    fun setInt(choice: Int) {
-//        sort.setChoice(choice)
-//
-//    }
-
-//    fun setAdapter(mobileModelList: List<MobileModel>, listener:MobileItemClickListener) {
-//        sectionPagerAdapter = MobileAdapter(mobileModelList, listener)//ส่งlistener
-//        rvMobileList.adapter = sectionPagerAdapter
-//        rvMobileList.layoutManager = LinearLayoutManager(context)
-//
-//    }
-
-    fun getml(): List<MobileModel> {
+    fun getMobileList(): List<MobileModel> {
         return mobileList
 
     }

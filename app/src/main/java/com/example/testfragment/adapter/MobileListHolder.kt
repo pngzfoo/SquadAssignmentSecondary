@@ -20,6 +20,8 @@ class MobileListHolder(
     LayoutInflater.from(parent.context).inflate(R.layout.mobile_list_card_holder, parent, false)
 ) {
 
+//    private val testArrayList: ArrayList<MobileModel> = arrayListOf()
+
 
     fun bind(model: MobileModel, listener: MobileItemClickListener) {
 //    fun bind(model: MobileModel) {
@@ -44,21 +46,22 @@ class MobileListHolder(
             itemView.heartImageButton.setBackgroundResource(R.drawable.cute_heart_button)
         }
         itemView.heartImageButton.setOnClickListener {
-            if (model.check == false) {
+            if (!model.check) {
                 itemView.heartImageButton.setBackgroundResource(R.drawable.cute_fill_heart_button)
                 model.check = true
                 favArrayList.add(model)
-                mobilePref?.putModelShared(favArrayList)
-                listener.onHeartClick(model)
+                mobilePref?.putModelShared(favArrayList, listener)
+//                listener.onHeartClick(favArrayList)
 
 
-            } else if (model.check == true) {
+            } else if (model.check) {
                 itemView.heartImageButton.setBackgroundResource(R.drawable.cute_heart_button)
                 model.check = false
-                listener.onHeartClickDelete(model)
-                mobilePref?.deleteStr(model.id)
+                favArrayList.remove(model)
+                mobilePref?.deleteStr(model.id, listener)
+//                listener.onHeartClickDelete(model)
 //                println(mobilePref?.getModelArrayList("TEST"))
-//
+//x
             }
 
 

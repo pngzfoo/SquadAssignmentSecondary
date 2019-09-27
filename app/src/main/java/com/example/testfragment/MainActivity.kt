@@ -23,6 +23,7 @@ class MainActivity : AppCompatActivity(), FragmentInterface, MainInterface {
     //    var int: Int = 0
     private val presenter = FragmentPresenter(this)
     var tabList = listOf<FragmentModel>()
+    var checkedItem = 3
 
 
 //    private lateinit var sectionsPagerAdapter: IntroPagerAdapter
@@ -47,7 +48,7 @@ class MainActivity : AppCompatActivity(), FragmentInterface, MainInterface {
         val sectionsPagerAdapter = IntroPagerAdapter(tabList, supportFragmentManager)
         view_pager.adapter = sectionsPagerAdapter
         tabs.setupWithViewPager(view_pager)
-        var checkedItem = 3
+//        var checkedItem = 3
 
 
 //      dialog for sorting
@@ -61,20 +62,23 @@ class MainActivity : AppCompatActivity(), FragmentInterface, MainInterface {
 //                 testget = mainFrag.getml()
 //            }
 
-            var testget = mobileListFragment.getml()
+            var dataMobileList = mobileListFragment.getMobileList()
             aBuilder.setSingleChoiceItems(listSort, checkedItem) { dialogInterface, i ->
                 when (i) {
                     0 -> {
-                        mobileListFragment.sortPrice(testget)
+                        mobileListFragment.sortPrice(dataMobileList)
+                        favoriteListFragment.sortPrice()
                         checkedItem = 0
                     }
 
                     1 -> {
-                        mobileListFragment.sortReversePrice(testget)
+                        mobileListFragment.sortReversePrice(dataMobileList)
+                        favoriteListFragment.sortReversePrice()
                         checkedItem = 1
                     }
                     2 -> {
-                        mobileListFragment.sortRating(testget)
+                        mobileListFragment.sortRating(dataMobileList)
+                        favoriteListFragment.sortRating()
                         checkedItem = 2
                     }
                 }
@@ -112,14 +116,11 @@ class MainActivity : AppCompatActivity(), FragmentInterface, MainInterface {
 //
 //    }
 //
-    override fun getFav(model: MobileModel) {
-        var favFrag = tabList[1].fragment as FavoriteListFragment
-        favFrag.setModelFav(model)
+    override fun setUpdateData(model: List<MobileModel>) {
+        val favoriteFragment = tabList[1].fragment as FavoriteListFragment
+//        favoriteFragment.setMobileSecondary(model,checkedItem)
+        favoriteFragment.setMobileThird(model)
     }
 
-    override fun getDelete(model: MobileModel) {
-        var favFrag = tabList[1].fragment as FavoriteListFragment
-        favFrag.setModelDelete(model)
-    }
 
 }

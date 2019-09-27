@@ -3,6 +3,7 @@ package com.example.testfragment
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
+import com.example.testfragment.mobile_interface.MobileItemClickListener
 import com.example.testfragment.model.MobileModel
 import com.google.gson.GsonBuilder
 import java.util.concurrent.CopyOnWriteArrayList
@@ -15,13 +16,49 @@ class MyCustomSharedPreference(context: Context) {
     var editor = sharedPreference.edit()
     private var gson = GsonBuilder().create()
 
-    fun putModelShared(mobileM: ArrayList<MobileModel>) {
-//        val mobileModelString = mobileM.toString()
-        val mobileModelString = gson.toJson(mobileM)
+    fun putModelShared(putArray: ArrayList<MobileModel>, listener: MobileItemClickListener) {
+        var sharedList = CopyOnWriteArrayList<MobileModel>()
+        var resultList = CopyOnWriteArrayList<MobileModel>()
+        val value = sharedPreference.getString("TEST", null)
+
+//        พังจ้าาา่
+//        if (value != null) {
+////            var mList: MutableList<MobileFavoriteModel> = mutableListOf<MobileFavoriteModel>()
+//            gson.fromJson(value, Array<MobileModel>::class.java).toList().apply {
+//                for (i in this) {
+//                    sharedList.add(i)
+//                }
+//            }
+//
+//            for (i in 0 until putArray.size) {
+//                for (j in 0 until sharedList.size) {
+//                    if (!(sharedList.get(j).id.equals(putArray.get(i)))) {
+//                        resultList.add(sharedList.get(j))
+//                    }
+//
+//                }
+//
+//            }
+//        }
+        val mobileModelString = gson.toJson(putArray)
         editor.putString("TEST", mobileModelString).commit()
+        listener.onHeartClick(putArray)
+
+
     }
 
     fun getModelArrayList(key: String): List<MobileModel> {
+        val dataString = sharedPreference.getString(key, null)
+        if (dataString != null) {
+            gson.fromJson(dataString, Array<MobileModel>::class.java).toList().apply {
+                return this
+            }
+        }
+
+        return listOf()//แปลงอาเรตรงนี้
+    }
+
+    fun getFavModelArrayList(key: String, listener: MobileItemClickListener): List<MobileModel> {
         val value = sharedPreference.getString(key, null)
         if (value != null) {
             gson.fromJson(value, Array<MobileModel>::class.java).toList().apply {
@@ -32,41 +69,33 @@ class MyCustomSharedPreference(context: Context) {
         return listOf()//แปลงอาเรตรงนี้
     }
 
-    fun getFavModelArrayList(key: String): List<MobileModel> {
-        val value = sharedPreference.getString(key, null)
-        if (value != null) {
-            gson.fromJson(value, Array<MobileModel>::class.java).toList().apply {
-                return this
-            }
-        }
+    fun deleteStr(deletedId: Int, listener: MobileItemClickListener) {
 
-        return listOf()//แปลงอาเรตรงนี้
-    }
+        val tempList = CopyOnWriteArrayList<MobileModel>()
+        val tempListToReturn = arrayListOf<MobileModel>()
 
-    fun deleteStr(key: Int) {
+        val sharePreferenceDataString = sharedPreference.getString("TEST", null)
+        if (sharePreferenceDataString != null) {
 
-        val mList = CopyOnWriteArrayList<MobileModel>()
-        val mobileModelString: String
-        val value = sharedPreference.getString("TEST", null)
-        if (value != null) {
-//            var mList: MutableList<MobileFavoriteModel> = mutableListOf<MobileFavoriteModel>()
-            gson.fromJson(value, Array<MobileModel>::class.java).toList().apply {
-                for (i in this) {
-                    mList.add(i)
+            gson.fromJson(sharePreferenceDataString, Array<MobileModel>::class.java).toList().apply {
+                for (model in this) {
+                    tempList.add(model)
                 }
-                for (j in mList) {
-                    if (j.id == key) {
-////                        i as String
-                        mList.remove(j)
-//                        editor.remove(i)
-//                        editor.commit()
-                    }
-
+                for (model in tempList) {
+                    if (model.id == deletedId)
+                        tempList.remove(model)
+                }
+                for (model in tempList) {
+                    tempListToReturn.add(model)
                 }
             }
-            mobileModelString = gson.toJson(mList)
+
+
+            val mobileModelString = gson.toJson(tempList)
+            editor.clear()
             editor.putString("TEST", mobileModelString).commit()
 
+            listener.onHeartClick(tempListToReturn)
         }
 
     }

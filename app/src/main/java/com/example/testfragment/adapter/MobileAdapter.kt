@@ -17,13 +17,14 @@ class MobileAdapter(
     private val testArrayList: ArrayList<MobileModel> = arrayListOf()
 
 
-    init {//อันนี้คือให้มันแอดอันเก่าเข้าอาเรยด้วยถ้าค่ามันไม่นัล
-        if (mobilePref?.getModelArrayList("TEST") != null) {
-            testArrayList.addAll(mobilePref?.getModelArrayList("TEST")!!)
-        }
-    }
+//    init {//อันนี้คือให้มันแอดอันเก่าเข้าอาเรยด้วยถ้าค่ามันไม่นัล
+//        if (mobilePref?.getModelArrayList("TEST") != null) {
+//            testArrayList.addAll(mobilePref?.getModelArrayList("TEST")!!)
+//        }
+//    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MobileListHolder {
+//        return MobileListHolder(parent, mobilePref, testArrayList)
         return MobileListHolder(parent, mobilePref, testArrayList)
     }
 
@@ -37,9 +38,5 @@ class MobileAdapter(
     fun updateData(mobileModelList: List<MobileModel>) {
         mobileList = mobileModelList
     }
-
-//    fun addListener(listener:MainInterface?){//เอาไว้ก่อน
-//
-//    }
 
 }
