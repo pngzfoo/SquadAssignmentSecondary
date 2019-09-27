@@ -118,8 +118,8 @@ class MainActivity : AppCompatActivity(), FragmentInterface, MainInterface {
 //
     override fun setUpdateData(model: List<MobileModel>) {
         val favoriteFragment = tabList[1].fragment as FavoriteListFragment
-//        favoriteFragment.setMobileSecondary(model,checkedItem)
-        favoriteFragment.setMobileThird(model)
+        favoriteFragment.setMobileSecondary(model, checkedItem)
+//        favoriteFragment.setMobileThird(model)
     }
 
 

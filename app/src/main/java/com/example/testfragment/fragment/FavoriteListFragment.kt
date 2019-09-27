@@ -69,29 +69,33 @@ class FavoriteListFragment : Fragment(), MobileFavoritePresenterInterface {
 
 
     }
-//
-//    override fun setMobileSecondary(mobileList: List<MobileModel>,checkedItem:Int) {
-//        if(mobileList != null){
-//            when (checkedItem) {
-//                0 -> {
-//                    presenter.sortPrice(mobileList)
-//                }
-//
-//                1 -> {
-//                    presenter.sortReversePrice(mobileList)
-//                }
-//                2 -> {
-//                    presenter.sortRating(mobileList)
-//                }
-//                3 -> { setMobileThird(mobileList)
-//
-//                }
-//
-//            }
-//        }
-//
-//
-//    }
+
+    override fun setMobileSecondary(mobileList: List<MobileModel>, checkedItem: Int) {
+        if (mobileList != null) {
+            when (checkedItem) {
+                0 -> {
+                    sectionPagerAdapter.updateData(mobileList)
+                    sortPrice()
+                }
+
+                1 -> {
+                    sectionPagerAdapter.updateData(mobileList)
+                    sortReversePrice()
+                }
+                2 -> {
+                    sectionPagerAdapter.updateData(mobileList)
+                    sortRating()
+                }
+                3 -> {
+                    setMobileThird(mobileList)
+
+                }
+
+            }
+        }
+
+
+    }
 
     override fun setMobileThird(mobileList: List<MobileModel>) {
         sectionPagerAdapter.updateData(mobileList)
