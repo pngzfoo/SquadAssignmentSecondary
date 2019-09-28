@@ -1,7 +1,7 @@
 package com.example.testfragment.adapter
 
 
-//import com.example.testfragment.MyCustomSharedPreference
+
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -67,6 +67,19 @@ class MobileListHolder(
 
         }
 
+
     }
+//
+//    fun setImageButton(modelDeleted: MobileModel){
+//        itemView.heartImageButton.setBackgroundResource(R.drawable.cute_heart_button)
+//        modelDeleted.check = false
+//        favArrayList.remove(modelDeleted)
+//        mobilePref?.deleteStr(modelDeleted.id, listener)
+//
+//    }
+
+
+
+
 }
 

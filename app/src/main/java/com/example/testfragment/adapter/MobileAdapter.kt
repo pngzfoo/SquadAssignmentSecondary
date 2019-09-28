@@ -6,37 +6,49 @@ import com.example.testfragment.MyCustomSharedPreference
 import com.example.testfragment.mobile_interface.MobileItemClickListener
 import com.example.testfragment.model.MobileModel
 
+
 class MobileAdapter(
     private var mobileList: List<MobileModel>,
     private val listener: MobileItemClickListener,
     private var mobilePref: MyCustomSharedPreference?
 
-//    private val testArrayList:ArrayList<MobileModel> = arrayListOf()//
 ) : RecyclerView.Adapter<MobileListHolder>() {
 
-    private val testArrayList: ArrayList<MobileModel> = arrayListOf()
+    private val mobileArrayList: ArrayList<MobileModel> = arrayListOf()
+    private var position: Int? = null
 
-
-//    init {//อันนี้คือให้มันแอดอันเก่าเข้าอาเรยด้วยถ้าค่ามันไม่นัล
-//        if (mobilePref?.getModelArrayList("TEST") != null) {
-//            testArrayList.addAll(mobilePref?.getModelArrayList("TEST")!!)
-//        }
-//    }
+    init {//อันนี้คือให้มันแอดอันเก่าเข้าอาเรยด้วยถ้าค่ามันไม่นัล
+        if (mobilePref?.getModelArrayList("TEST") != null) {
+            mobileArrayList.addAll(mobilePref?.getModelArrayList("TEST")!!)
+        }
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MobileListHolder {
-//        return MobileListHolder(parent, mobilePref, testArrayList)
-        return MobileListHolder(parent, mobilePref, testArrayList)
+        return MobileListHolder(parent, mobilePref, mobileArrayList)
     }
 
     override fun getItemCount(): Int = mobileList.count()
 
     override fun onBindViewHolder(holder: MobileListHolder, position: Int) {
+        this.position = position
         holder.bind(mobileList[position], listener)
-//        holder.bind(mobileList[position], listener)
+
     }
 
     fun updateData(mobileModelList: List<MobileModel>) {
         mobileList = mobileModelList
+    }
+
+    fun swipeDelete(mobileModel: MobileModel) {
+//        mobileArrayList.remove(mobileList[position])
+
+        mobileModel.check = true
+//        if (mobileArrayList.contains(mobileModel)) {
+//        }
+        mobilePref?.deleteStr(mobileModel.id, listener)
+//        updateData(mobileArrayList)
+
+
     }
 
 }

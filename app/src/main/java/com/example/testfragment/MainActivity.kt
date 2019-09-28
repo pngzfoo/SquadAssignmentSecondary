@@ -35,8 +35,8 @@ class MainActivity : AppCompatActivity(), FragmentInterface, MainInterface {
 //
 
 
-        val mobileListFragment = MobileListFragment.newInstance().apply { setFavMobileFrag(this@MainActivity) }
-        val favoriteListFragment = FavoriteListFragment.newInstance()
+        val mobileListFragment = MobileListFragment.newInstance().apply { setFavoriteMobileFragment(this@MainActivity) }
+        val favoriteListFragment = FavoriteListFragment.newInstance().apply { swipDeleteListener(this@MainActivity) }
 
 //        favoriteListFragment.presenter
 
@@ -119,7 +119,11 @@ class MainActivity : AppCompatActivity(), FragmentInterface, MainInterface {
     override fun setUpdateData(model: List<MobileModel>) {
         val favoriteFragment = tabList[1].fragment as FavoriteListFragment
         favoriteFragment.setMobileSecondary(model, checkedItem)
-//        favoriteFragment.setMobileThird(model)
+    }
+
+    override fun getSwipeDeletedId(mobileModel: MobileModel) {
+        val mobileFragment = tabList[0].fragment as MobileListFragment
+        mobileFragment.setDeletedId(mobileModel)
     }
 
 

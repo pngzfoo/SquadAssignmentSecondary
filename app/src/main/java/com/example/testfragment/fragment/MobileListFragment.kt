@@ -40,20 +40,47 @@ class MobileListFragment : Fragment(), MobilePresenterInterface {
     private var gson = GsonBuilder().create()
     private val presenter = MobilePresenter(this, MobileManager.getService())
     private var mobileList = listOf<MobileModel>()
-    private lateinit var sectionPagerAdapter: MobileAdapter
+    private lateinit var mobileAdapter: MobileAdapter
     private var addFavListener: MainInterface? = null
-    private var listenerF: MobilePresenterInterface? = null
-//    private lateinit var customSharedPreference : MyCustomSharedPreference
 
-//    private val imagePresenter = MobilePicPresenter (this, MobileManager.getService())
-
-    fun setFavMobileFrag(addFavListener: MainInterface) {
+    fun setFavoriteMobileFragment(addFavListener: MainInterface) {
         this.addFavListener = addFavListener
     }
 
-//    fun getFavMobileFrag() {
-//        return model
-//    }
+    fun getMobileList(): List<MobileModel> {
+        return mobileList
+
+    }
+
+    fun sortPrice(testget: List<MobileModel>) {
+        presenter.sortPrice(testget)
+
+    }
+
+    fun sortReversePrice(testget: List<MobileModel>) {
+        presenter.sortReversePrice(testget)
+
+    }
+
+    fun sortRating(testget: List<MobileModel>) {
+        presenter.sortRating(testget)
+
+    }
+
+    fun setDeletedId(mobileModel: MobileModel) {
+        mobileAdapter.swipeDelete(mobileModel)
+    }
+
+    fun getShared(): List<MobileModel> {
+        sharedPreference = context!!.getSharedPreferences("FAVORITE_FRAGMENT", Context.MODE_PRIVATE)
+//        val str: List<MobileFavoriteModel>
+        val value = sharedPreference.getString("TEST", null)
+        if (value != null) {
+            return gson.fromJson(value, Array<MobileModel>::class.java).toList()
+        }
+        return listOf()
+    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -86,59 +113,23 @@ class MobileListFragment : Fragment(), MobilePresenterInterface {
 //                addFavListener?.getDelete(mobileModel)
             }
         }
-//        var mobilePref:MyCustomSharedPreference? = context?.let { MyCustomSharedPreference(it) }
-//        var sortMobileList = setSort()
-//       var sortMobileList = sort.sortBy(mobileModelList)
-
-//        setAdapter(ml,listener)
 
         var customSharedPreference: MyCustomSharedPreference? = context?.let { MyCustomSharedPreference(it) }
 
-        sectionPagerAdapter = MobileAdapter(mobileModelList, listener, customSharedPreference)//ส่งlistener
-        rvMobileList.adapter = sectionPagerAdapter
+        mobileAdapter = MobileAdapter(mobileModelList, listener, customSharedPreference)//ส่งlistener
+        rvMobileList.adapter = mobileAdapter
         rvMobileList.layoutManager = LinearLayoutManager(context)
 //        sectionPagerAdapter.addListener(addFavListener)
 
     }
 
     override fun setTestMobile(mobileModelList: List<MobileModel>) {
-        sectionPagerAdapter.updateData(mobileModelList)
-        sectionPagerAdapter.notifyDataSetChanged()
+        mobileAdapter.updateData(mobileModelList)
+        mobileAdapter.notifyDataSetChanged()
 //
     }
 
-    override fun getModel(model: MobileModel) {
 
-    }
 
-    fun getMobileList(): List<MobileModel> {
-        return mobileList
-
-    }
-
-    fun sortPrice(testget: List<MobileModel>) {
-        presenter.sortPrice(testget)
-
-    }
-
-    fun sortReversePrice(testget: List<MobileModel>) {
-        presenter.sortReversePrice(testget)
-
-    }
-
-    fun sortRating(testget: List<MobileModel>) {
-        presenter.sortRating(testget)
-
-    }
-
-    fun getShared(): List<MobileModel> {
-        sharedPreference = context!!.getSharedPreferences("FAVORITE_FRAGMENT", Context.MODE_PRIVATE)
-//        val str: List<MobileFavoriteModel>
-        val value = sharedPreference.getString("TEST", null)
-        if (value != null) {
-            return gson.fromJson(value, Array<MobileModel>::class.java).toList()
-        }
-        return listOf()
-    }
 
 }

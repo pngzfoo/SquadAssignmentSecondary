@@ -15,4 +15,5 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:listitem="@layout/mobile_favorite_card_holder" />
 
+
 </androidx.constraintlayout.widget.ConstraintLayout>

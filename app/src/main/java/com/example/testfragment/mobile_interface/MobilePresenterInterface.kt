@@ -7,6 +7,5 @@ interface MobilePresenterInterface {
 
     fun setMobile(mobileModelList: List<MobileModel>)
     fun setTestMobile(mobileModelList: List<MobileModel>)
-    fun getModel(model: MobileModel)
 
 }

@@ -5,13 +5,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.testfragment.MyCustomSharedPreference
 import com.example.testfragment.R
 import com.example.testfragment.adapter.MobileFavoriteAdapter
 import com.example.testfragment.adapter.MobileFavoritePresenter
+import com.example.testfragment.adapter.SwipeToDeleteCallback
+import com.example.testfragment.mobile_interface.FavoriteItemClickListener
+import com.example.testfragment.mobile_interface.MainInterface
 import com.example.testfragment.mobile_interface.MobileFavoritePresenterInterface
-import com.example.testfragment.mobile_interface.MobileItemClickListener
 import com.example.testfragment.model.MobileModel
 import com.example.testfragment.ui.main.main.mobile_detail.MobileDetailActivity
 import kotlinx.android.synthetic.main.fragment_favorite.*
@@ -32,10 +36,34 @@ class FavoriteListFragment : Fragment(), MobileFavoritePresenterInterface {
     }
 
     var model: MobileModel? = null
-    lateinit var sectionPagerAdapter: MobileFavoriteAdapter
+    lateinit var mobileFavoriteAdapter: MobileFavoriteAdapter
     var presenter = MobileFavoritePresenter(this)
+    private var swipeDeleteListener: MainInterface? = null
 
 
+    fun swipDeleteListener(swipeDeleteListener: MainInterface) {
+        this.swipeDeleteListener = swipeDeleteListener
+    }
+
+    fun sortPrice() {
+        var dataMobileFavoriteList = mobileFavoriteAdapter.getMobileFavoriteList()
+        var dataUpdate = presenter.sortPrice(dataMobileFavoriteList)
+        setMobileThird(dataUpdate)
+    }
+
+    fun sortReversePrice() {
+        var dataMobileFavoriteList = mobileFavoriteAdapter.getMobileFavoriteList()
+        var dataUpdate = presenter.sortReversePrice(dataMobileFavoriteList)
+        setMobileThird(dataUpdate)
+
+    }
+
+    fun sortRating() {
+        var dataMobileFavoriteList = mobileFavoriteAdapter.getMobileFavoriteList()
+        var dataUpdate = presenter.sortRating(dataMobileFavoriteList)
+        setMobileThird(dataUpdate)
+
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -46,27 +74,31 @@ class FavoriteListFragment : Fragment(), MobileFavoritePresenterInterface {
 
     }
 
+
     override fun setMobile(mobileFavModelList: List<MobileModel>) {
 
-
-        val listener = object : MobileItemClickListener {
+        val listener = object : FavoriteItemClickListener {
             override fun onItemClick(mobileModel: MobileModel) {
-               MobileDetailActivity.startActivity(context, mobileModel)
+                MobileDetailActivity.startActivity(context, mobileModel)
             }
 
-            override fun onHeartClick(mobileModel: List<MobileModel>) {
-//
+            override fun onSwipeDelete(mobileModel: MobileModel) {
+                swipeDeleteListener!!.getSwipeDeletedId(mobileModel)
             }
 
-            override fun onHeartClickDelete(mobileModel: MobileModel) {
-
-            }
         }
-        sectionPagerAdapter = MobileFavoriteAdapter(ArrayList(mobileFavModelList), listener)//ส่งlistener
-        rvMobileFavoriteList.adapter = sectionPagerAdapter
+        mobileFavoriteAdapter = MobileFavoriteAdapter(ArrayList(mobileFavModelList), listener)//ส่งlistener
+        rvMobileFavoriteList.adapter = mobileFavoriteAdapter
         rvMobileFavoriteList.layoutManager = LinearLayoutManager(context)
 
-
+        val swipeHandler = object : SwipeToDeleteCallback(context!!) {
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val adapter = rvMobileFavoriteList.adapter as MobileFavoriteAdapter
+                adapter.removeAt(viewHolder.adapterPosition)
+            }
+        }
+        val itemTouchHelper = ItemTouchHelper(swipeHandler)
+        itemTouchHelper.attachToRecyclerView(rvMobileFavoriteList)
 
     }
 
@@ -74,16 +106,16 @@ class FavoriteListFragment : Fragment(), MobileFavoritePresenterInterface {
         if (mobileList != null) {
             when (checkedItem) {
                 0 -> {
-                    sectionPagerAdapter.updateData(mobileList)
+                    mobileFavoriteAdapter.updateData(mobileList)
                     sortPrice()
                 }
 
                 1 -> {
-                    sectionPagerAdapter.updateData(mobileList)
+                    mobileFavoriteAdapter.updateData(mobileList)
                     sortReversePrice()
                 }
                 2 -> {
-                    sectionPagerAdapter.updateData(mobileList)
+                    mobileFavoriteAdapter.updateData(mobileList)
                     sortRating()
                 }
                 3 -> {
@@ -98,28 +130,8 @@ class FavoriteListFragment : Fragment(), MobileFavoritePresenterInterface {
     }
 
     override fun setMobileThird(mobileList: List<MobileModel>) {
-        sectionPagerAdapter.updateData(mobileList)
-        sectionPagerAdapter.notifyDataSetChanged()
-
-    }
-
-    fun sortPrice() {
-        var dataMobileFavoriteList = sectionPagerAdapter.getMobileFavoriteList()
-        var dataUpdate = presenter.sortPrice(dataMobileFavoriteList)
-        setMobileThird(dataUpdate)
-    }
-
-    fun sortReversePrice() {
-        var dataMobileFavoriteList = sectionPagerAdapter.getMobileFavoriteList()
-        var dataUpdate = presenter.sortReversePrice(dataMobileFavoriteList)
-        setMobileThird(dataUpdate)
-
-    }
-
-    fun sortRating() {
-        var dataMobileFavoriteList = sectionPagerAdapter.getMobileFavoriteList()
-        var dataUpdate = presenter.sortRating(dataMobileFavoriteList)
-        setMobileThird(dataUpdate)
+        mobileFavoriteAdapter.updateData(mobileList)
+        mobileFavoriteAdapter.notifyDataSetChanged()
 
     }
 

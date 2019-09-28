@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.testfragment.R
-import com.example.testfragment.mobile_interface.MobileItemClickListener
+import com.example.testfragment.mobile_interface.FavoriteItemClickListener
 import com.example.testfragment.model.MobileModel
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.mobile_favorite_card_holder.view.*
@@ -16,13 +16,13 @@ class MobileFavoriteHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
 
 //    lateinit var model:MobileFavoriteModel
 
-    fun bind(model: MobileModel, listener: MobileItemClickListener) {
+    fun bind(model: MobileModel, listener: FavoriteItemClickListener) {
 //    fun bind(model: MobileModel) {
 
 
-//        itemView.setOnClickListener {
-//            listener.onItemClick(model)
-//        }
+        itemView.setOnClickListener {
+            listener.onItemClick(model)
+        }
 
         Picasso.get()
             .load(model.thumbImageURL)

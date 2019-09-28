@@ -17,11 +17,12 @@ class MyCustomSharedPreference(context: Context) {
     private var gson = GsonBuilder().create()
 
     fun putModelShared(putArray: ArrayList<MobileModel>, listener: MobileItemClickListener) {
-        var sharedList = CopyOnWriteArrayList<MobileModel>()
+        var sharedList = arrayListOf<MobileModel>()
         var resultList = CopyOnWriteArrayList<MobileModel>()
         val value = sharedPreference.getString("TEST", null)
 
-//        พังจ้าาา่
+
+//
 //        if (value != null) {
 ////            var mList: MutableList<MobileFavoriteModel> = mutableListOf<MobileFavoriteModel>()
 //            gson.fromJson(value, Array<MobileModel>::class.java).toList().apply {

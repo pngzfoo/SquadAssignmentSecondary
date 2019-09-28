@@ -2,12 +2,12 @@ package com.example.testfragment.adapter
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.testfragment.mobile_interface.MobileItemClickListener
+import com.example.testfragment.mobile_interface.FavoriteItemClickListener
 import com.example.testfragment.model.MobileModel
 
 class MobileFavoriteAdapter(
     private var mobileFavList: ArrayList<MobileModel>,
-    private val listener: MobileItemClickListener
+    private val listener: FavoriteItemClickListener
 
 ) : RecyclerView.Adapter<MobileFavoriteHolder>() {
 
@@ -31,6 +31,18 @@ class MobileFavoriteAdapter(
         return mobileFavList
 
     }
+
+    fun removeAt(position: Int) {
+//        mobileFavList.removeAt(position)
+//        updateData(mobileFavList)
+//        listener.onSwipeDelete(mobileFavList[position])
+        mobileFavList.removeAt(position)
+        notifyItemRemoved(position)
+//        listener.onSwipeDelete(position)
+
+
+    }
+
 
 
 }
