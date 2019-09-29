@@ -1,4 +1,4 @@
-package com.example.testfragment.adapter
+package com.example.testfragment.presenter
 
 import com.example.testfragment.mobile_interface.MobileImagePresenterInterface
 import com.example.testfragment.model.MobileImageModel
@@ -10,7 +10,7 @@ import retrofit2.Response
 class MobilePicPresenter(val view: MobileImagePresenterInterface, private val service: ApiService) {
 
 
-    fun getMobileApi(id: Int) {
+    fun getImageApi(id: Int) {
         service.getImageById(id).enqueue(object : Callback<List<MobileImageModel>> {
             override fun onFailure(call: Call<List<MobileImageModel>>, t: Throwable) {}
 

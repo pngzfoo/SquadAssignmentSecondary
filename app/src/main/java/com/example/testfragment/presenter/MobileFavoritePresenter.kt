@@ -1,6 +1,5 @@
-package com.example.testfragment.adapter
+package com.example.testfragment.presenter
 
-import com.example.testfragment.MyCustomSharedPreference
 import com.example.testfragment.mobile_interface.MobileFavoritePresenterInterface
 import com.example.testfragment.model.MobileModel
 import com.google.gson.GsonBuilder

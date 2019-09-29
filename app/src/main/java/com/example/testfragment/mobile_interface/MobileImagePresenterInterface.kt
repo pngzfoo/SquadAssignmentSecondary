@@ -4,7 +4,5 @@ import com.example.testfragment.model.MobileImageModel
 
 
 interface MobileImagePresenterInterface {
-
     fun setImage(mobileModelList: List<MobileImageModel>)
-
 }

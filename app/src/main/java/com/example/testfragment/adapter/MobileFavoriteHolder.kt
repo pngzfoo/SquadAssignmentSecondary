@@ -14,38 +14,19 @@ class MobileFavoriteHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
     LayoutInflater.from(parent.context).inflate(R.layout.mobile_favorite_card_holder, parent, false)
 ) {
 
-//    lateinit var model:MobileFavoriteModel
 
     fun bind(model: MobileModel, listener: FavoriteItemClickListener) {
-//    fun bind(model: MobileModel) {
-
-
         itemView.setOnClickListener {
             listener.onItemClick(model)
         }
 
         Picasso.get()
             .load(model.thumbImageURL)
-            //.placeholder(R.mipmap.ic_launcher)
+            .placeholder(R.mipmap.ic_launcher)
             .into(itemView.picFav)
         itemView.nameFav.text = model.name
         itemView.priceFav.text = "Price: $${model.price}"
         itemView.ratingFav.text = "Rating: ${model.rating.toString()}"
 
-
-//        this.model.check = model.check
-//        this.model.id = model.id
-
-
     }
-
-//    fun getCheck():Boolean{
-//        return this.model.check
-//    }
-//
-//
-//    fun getId():Int{
-//        return this.model.id
-//    }
-
 }

@@ -7,10 +7,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.testfragment.R
 import com.example.testfragment.adapter.ImageListAdapter
-import com.example.testfragment.adapter.MobilePicPresenter
 import com.example.testfragment.mobile_interface.MobileImagePresenterInterface
 import com.example.testfragment.model.MobileImageModel
 import com.example.testfragment.model.MobileModel
+import com.example.testfragment.presenter.MobilePicPresenter
 import com.example.testfragment.service.MobileManager
 import kotlinx.android.synthetic.main.activity_mobile_detail.*
 
@@ -26,9 +26,6 @@ class MobileDetailActivity : AppCompatActivity(), MobileImagePresenterInterface 
                 }
             )
     }
-
-//    private val presenter = MobileDetailPresenter(this)
-//    private val imagePresenter = MobilePicPresenter(this)//
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,10 +53,10 @@ class MobileDetailActivity : AppCompatActivity(), MobileImagePresenterInterface 
         mobileDetailRatingTextView.text = "Rating: ${mobileModel.rating}"
 
         val presenter = MobilePicPresenter(this, MobileManager.getService())
-        mobileModel.id.let { presenter.getMobileApi(it) }
+        mobileModel.id.let { presenter.getImageApi(it) }
 
 
-//back button
+        //back button
         val actionbar = supportActionBar
         actionbar!!.setDisplayHomeAsUpEnabled(true)
 

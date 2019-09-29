@@ -5,10 +5,10 @@ package com.example.testfragment.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.testfragment.MyCustomSharedPreference
 import com.example.testfragment.R
 import com.example.testfragment.mobile_interface.MobileItemClickListener
 import com.example.testfragment.model.MobileModel
+import com.example.testfragment.presenter.MyCustomSharedPreference
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.mobile_list_card_holder.view.*
 
@@ -27,14 +27,12 @@ class MobileListHolder(
 
         Picasso.get()
             .load(model.thumbImageURL)
-            //.placeholder(R.mipmap.ic_launcher)
+            .placeholder(R.mipmap.ic_launcher)
             .into(itemView.mobilePic)
         itemView.mobileName.text = model.name
         itemView.mobileDescription.text = model.description
         itemView.mobilePrice.text = "Price: $${model.price}"
         itemView.mobileRating.text = "Rating: ${model.rating.toString()}"
-
-
 
         if (model.check) {
             itemView.heartImageButton.setBackgroundResource(R.drawable.cute_fill_heart_button)
@@ -62,17 +60,6 @@ class MobileListHolder(
 
 
     }
-//
-//    fun setImageButton(modelDeleted: MobileModel){
-//        itemView.heartImageButton.setBackgroundResource(R.drawable.cute_heart_button)
-//        modelDeleted.check = false
-//        favArrayList.remove(modelDeleted)
-//        mobilePref?.deleteStr(modelDeleted.id, listener)
-//
-//    }
-
-
-
 
 }
 

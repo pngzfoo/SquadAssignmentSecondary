@@ -1,4 +1,4 @@
-package com.example.testfragment.adapter
+package com.example.testfragment.presenter
 
 
 import com.example.testfragment.mobile_interface.MobilePresenterInterface
@@ -11,7 +11,7 @@ import retrofit2.Response
 class MobilePresenter(val view: MobilePresenterInterface, private val service: ApiService) {
 
 
-    fun getMobileApi(mobileFavList: List<MobileModel>, checkedItem: Int) {
+    fun getMobileApi(mobileFavoriteList: List<MobileModel>, checkedItem: Int) {
         service.getMobileList().enqueue(object : Callback<List<MobileModel>> {
             override fun onFailure(call: Call<List<MobileModel>>, t: Throwable) {}
 
@@ -19,24 +19,24 @@ class MobilePresenter(val view: MobilePresenterInterface, private val service: A
                 response.body()?.apply {
                     if (this.isNotEmpty()) {
 
-                        if (mobileFavList != null) {
-                            for (i in this) {
-                                for (j in mobileFavList) {
-                                    if (i.id == j.id) {
-                                        i.check = true
+                        if (mobileFavoriteList != null) {
+                            for (mobileModel in this) {
+                                for (mobileModelSharedPref in mobileFavoriteList) {
+                                    if (mobileModel.id == mobileModelSharedPref.id) {
+                                        mobileModel.check = true
                                     }
                                 }
                             }
                         }
                         when (checkedItem) {
                             0 -> {
-                                view.setTestMobile(this.sortedBy { it.price })
+                                view.setMobileSecond(this.sortedBy { it.price })
                             }
                             1 -> {
-                                view.setTestMobile(this.sortedByDescending { it.price })
+                                view.setMobileSecond(this.sortedByDescending { it.price })
                             }
                             2 -> {
-                                view.setTestMobile(this.sortedBy { it.rating })
+                                view.setMobileSecond(this.sortedBy { it.rating })
                             }
                             3 -> {
                                 view.setMobile(this)
@@ -53,7 +53,7 @@ class MobilePresenter(val view: MobilePresenterInterface, private val service: A
 
     fun sortPrice(mobileModelList: List<MobileModel>) {
         if (mobileModelList.isNotEmpty()) {
-            view.setTestMobile(mobileModelList.sortedBy { it.price })
+            view.setMobileSecond(mobileModelList.sortedBy { it.price })
         }
 
     }
@@ -61,14 +61,14 @@ class MobilePresenter(val view: MobilePresenterInterface, private val service: A
 
     fun sortReversePrice(mobileModelList: List<MobileModel>) {
         if (mobileModelList.isNotEmpty()) {
-            view.setTestMobile(mobileModelList.sortedByDescending { it.price })
+            view.setMobileSecond(mobileModelList.sortedByDescending { it.price })
         }
     }
 
 
     fun sortRating(mobileModelList: List<MobileModel>) {
         if (mobileModelList.isNotEmpty()) {
-            view.setTestMobile(mobileModelList.sortedBy { it.rating })
+            view.setMobileSecond(mobileModelList.sortedBy { it.rating })
         }
     }
 

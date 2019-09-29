@@ -23,7 +23,7 @@ class ImageListHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
         }
         Picasso.get()
                 .load(updatedUrl)
-                //.placeholder(R.mipmap.ic_launcher)
+            .placeholder(R.mipmap.ic_launcher)
                 .into(itemView.mobileImage)
     }
 

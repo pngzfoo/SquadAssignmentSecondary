@@ -2,9 +2,9 @@ package com.example.testfragment.adapter
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.testfragment.MyCustomSharedPreference
 import com.example.testfragment.mobile_interface.MobileItemClickListener
 import com.example.testfragment.model.MobileModel
+import com.example.testfragment.presenter.MyCustomSharedPreference
 
 
 class MobileAdapter(

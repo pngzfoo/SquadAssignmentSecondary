@@ -1,4 +1,4 @@
-package com.example.testfragment
+package com.example.testfragment.presenter
 
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
@@ -29,7 +29,6 @@ class MyCustomSharedPreference(context: Context) {
                 return this
             }
         }
-
         return listOf()//แปลงอาเรตรงนี้
     }
 

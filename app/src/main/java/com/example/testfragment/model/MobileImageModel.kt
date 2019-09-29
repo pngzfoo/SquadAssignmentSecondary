@@ -6,7 +6,6 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class MobileImageModel(
-
         @SerializedName("url")
         val url: String,
 
@@ -15,5 +14,4 @@ data class MobileImageModel(
 
         @SerializedName("id")
         val id: String
-
 ) : Parcelable

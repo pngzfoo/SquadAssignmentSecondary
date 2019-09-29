@@ -8,15 +8,15 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.testfragment.MyCustomSharedPreference
 import com.example.testfragment.R
 import com.example.testfragment.adapter.MobileFavoriteAdapter
-import com.example.testfragment.adapter.MobileFavoritePresenter
-import com.example.testfragment.adapter.SwipeToDeleteCallback
 import com.example.testfragment.mobile_interface.FavoriteItemClickListener
 import com.example.testfragment.mobile_interface.MainInterface
 import com.example.testfragment.mobile_interface.MobileFavoritePresenterInterface
 import com.example.testfragment.model.MobileModel
+import com.example.testfragment.presenter.MobileFavoritePresenter
+import com.example.testfragment.presenter.MyCustomSharedPreference
+import com.example.testfragment.presenter.SwipeToDeleteCallback
 import com.example.testfragment.ui.main.main.mobile_detail.MobileDetailActivity
 import kotlinx.android.synthetic.main.fragment_favorite.*
 
@@ -83,7 +83,7 @@ class FavoriteListFragment : Fragment(), MobileFavoritePresenterInterface {
             }
 
             override fun onSwipeDelete(mobileModel: MobileModel) {
-                swipeDeleteListener!!.getSwipeDeletedId(mobileModel)
+                swipeDeleteListener!!.getSwipeDeleted(mobileModel)
             }
 
         }
@@ -134,8 +134,6 @@ class FavoriteListFragment : Fragment(), MobileFavoritePresenterInterface {
         mobileFavoriteAdapter.notifyDataSetChanged()
 
     }
-
-
 
 
 }

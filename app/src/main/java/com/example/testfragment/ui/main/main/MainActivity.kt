@@ -1,8 +1,9 @@
-package com.example.testfragment
+package com.example.testfragment.ui.main.main
 
 import android.app.AlertDialog
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.example.testfragment.R
 import com.example.testfragment.fragment.FavoriteListFragment
 import com.example.testfragment.fragment.MobileListFragment
 import com.example.testfragment.mobile_interface.MainInterface
@@ -20,13 +21,10 @@ class MainActivity : AppCompatActivity(), FragmentInterface, MainInterface {
         const val FAVORITE_LIST_TAB_NAME = "Favorite List"
     }
 
-    //    var int: Int = 0
     private val presenter = FragmentPresenter(this)
     var tabList = listOf<FragmentModel>()
     var checkedItem = 3
 
-
-//    private lateinit var sectionsPagerAdapter: IntroPagerAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -94,9 +92,9 @@ class MainActivity : AppCompatActivity(), FragmentInterface, MainInterface {
         favoriteFragment.setMobileSecondary(model, checkedItem)
     }
 
-    override fun getSwipeDeletedId(mobileModel: MobileModel) {
+    override fun getSwipeDeleted(mobileModel: MobileModel) {
         val mobileFragment = tabList[0].fragment as MobileListFragment
-        mobileFragment.setDeletedId(mobileModel, checkedItem)
+        mobileFragment.setDeleted(mobileModel, checkedItem)
 
 
     }

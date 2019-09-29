@@ -1,4 +1,4 @@
-package com.example.testfragment.adapter
+package com.example.testfragment.presenter
 
 import android.content.Context
 import android.graphics.*

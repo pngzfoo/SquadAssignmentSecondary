@@ -14,7 +14,7 @@
         <activity android:name=".ui.main.main.mobile_detail.MobileDetailActivity">
         </activity>
         <activity
-                android:name=".MainActivity"
+                android:name=".ui.main.main.MainActivity"
                 android:label="@string/app_name"
                 android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
