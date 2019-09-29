@@ -123,7 +123,8 @@ class MainActivity : AppCompatActivity(), FragmentInterface, MainInterface {
 
     override fun getSwipeDeletedId(mobileModel: MobileModel) {
         val mobileFragment = tabList[0].fragment as MobileListFragment
-        mobileFragment.setDeletedId(mobileModel)
+        mobileFragment.setDeletedId(mobileModel, checkedItem)
+
     }
 
 

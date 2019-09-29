@@ -34,14 +34,13 @@ class MobileListFragment : Fragment(), MobilePresenterInterface {
 
     }
 
-
-    //    private lateinit var presenter: MobilePresenter
     private lateinit var sharedPreference: SharedPreferences
     private var gson = GsonBuilder().create()
     private val presenter = MobilePresenter(this, MobileManager.getService())
     private var mobileList = listOf<MobileModel>()
     private lateinit var mobileAdapter: MobileAdapter
     private var addFavListener: MainInterface? = null
+
 
     fun setFavoriteMobileFragment(addFavListener: MainInterface) {
         this.addFavListener = addFavListener
@@ -52,23 +51,24 @@ class MobileListFragment : Fragment(), MobilePresenterInterface {
 
     }
 
-    fun sortPrice(testget: List<MobileModel>) {
-        presenter.sortPrice(testget)
+    fun sortPrice(mobileModelList: List<MobileModel>) {
+        presenter.sortPrice(mobileModelList)
 
     }
 
-    fun sortReversePrice(testget: List<MobileModel>) {
-        presenter.sortReversePrice(testget)
+    fun sortReversePrice(mobileModelList: List<MobileModel>) {
+        presenter.sortReversePrice(mobileModelList)
 
     }
 
-    fun sortRating(testget: List<MobileModel>) {
-        presenter.sortRating(testget)
+    fun sortRating(mobileModelList: List<MobileModel>) {
+        presenter.sortRating(mobileModelList)
 
     }
 
-    fun setDeletedId(mobileModel: MobileModel) {
+    fun setDeletedId(mobileModel: MobileModel, checkedItem: Int) {
         mobileAdapter.swipeDelete(mobileModel)
+        presenter.getMobileApiSecond(getShared(), checkedItem)
     }
 
     fun getShared(): List<MobileModel> {
@@ -80,7 +80,6 @@ class MobileListFragment : Fragment(), MobilePresenterInterface {
         }
         return listOf()
     }
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -109,9 +108,6 @@ class MobileListFragment : Fragment(), MobilePresenterInterface {
                 addFavListener?.setUpdateData(mobileModel)
             }
 
-            override fun onHeartClickDelete(mobileModel: MobileModel) {
-//                addFavListener?.getDelete(mobileModel)
-            }
         }
 
         var customSharedPreference: MyCustomSharedPreference? = context?.let { MyCustomSharedPreference(it) }
@@ -119,14 +115,17 @@ class MobileListFragment : Fragment(), MobilePresenterInterface {
         mobileAdapter = MobileAdapter(mobileModelList, listener, customSharedPreference)//ส่งlistener
         rvMobileList.adapter = mobileAdapter
         rvMobileList.layoutManager = LinearLayoutManager(context)
-//        sectionPagerAdapter.addListener(addFavListener)
 
     }
 
     override fun setTestMobile(mobileModelList: List<MobileModel>) {
         mobileAdapter.updateData(mobileModelList)
         mobileAdapter.notifyDataSetChanged()
-//
+    }
+
+    override fun setMobileThird(mobileModelList: List<MobileModel>, ckeckedId: Int) {
+        mobileAdapter.updateData(mobileModelList)
+        mobileAdapter.notifyDataSetChanged()
     }
 
 

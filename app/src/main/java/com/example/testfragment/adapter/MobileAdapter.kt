@@ -40,15 +40,7 @@ class MobileAdapter(
     }
 
     fun swipeDelete(mobileModel: MobileModel) {
-//        mobileArrayList.remove(mobileList[position])
-
-        mobileModel.check = true
-//        if (mobileArrayList.contains(mobileModel)) {
-//        }
         mobilePref?.deleteStr(mobileModel.id, listener)
-//        updateData(mobileArrayList)
-
-
     }
 
 }

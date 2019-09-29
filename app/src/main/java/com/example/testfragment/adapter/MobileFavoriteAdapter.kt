@@ -33,16 +33,10 @@ class MobileFavoriteAdapter(
     }
 
     fun removeAt(position: Int) {
-//        mobileFavList.removeAt(position)
-//        updateData(mobileFavList)
-//        listener.onSwipeDelete(mobileFavList[position])
+        var deletedModel = mobileFavList[position]
         mobileFavList.removeAt(position)
+        listener.onSwipeDelete(deletedModel)
         notifyItemRemoved(position)
-//        listener.onSwipeDelete(position)
-
-
     }
-
-
 
 }
