@@ -40,6 +40,12 @@ class MobileListFragment : Fragment(), MobilePresenterInterface {
     private var mobileList = listOf<MobileModel>()
     private lateinit var mobileAdapter: MobileAdapter
     private var addFavListener: MainInterface? = null
+    private var checkedItem = 3
+
+
+    fun setChecked(checkedItem: Int) {
+        this.checkedItem = checkedItem
+    }
 
 
     fun setFavoriteMobileFragment(addFavListener: MainInterface) {
@@ -68,7 +74,8 @@ class MobileListFragment : Fragment(), MobilePresenterInterface {
 
     fun setDeletedId(mobileModel: MobileModel, checkedItem: Int) {
         mobileAdapter.swipeDelete(mobileModel)
-        presenter.getMobileApiSecond(getShared(), checkedItem)
+        presenter.getMobileApi(getShared(), checkedItem)
+//        presenter.getMobileApiSecond(getShared(), checkedItem)
     }
 
     fun getShared(): List<MobileModel> {
@@ -91,7 +98,7 @@ class MobileListFragment : Fragment(), MobilePresenterInterface {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        presenter.getMobileApi(getShared())
+        presenter.getMobileApi(getShared(), checkedItem)
 
     }
 

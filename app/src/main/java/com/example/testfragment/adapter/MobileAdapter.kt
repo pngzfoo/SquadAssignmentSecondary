@@ -40,6 +40,7 @@ class MobileAdapter(
     }
 
     fun swipeDelete(mobileModel: MobileModel) {
+        mobileArrayList.remove(mobileModel)
         mobilePref?.deleteStr(mobileModel.id, listener)
     }
 

@@ -32,13 +32,11 @@ class MainActivity : AppCompatActivity(), FragmentInterface, MainInterface {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         presenter.initView()
-//
+
 
 
         val mobileListFragment = MobileListFragment.newInstance().apply { setFavoriteMobileFragment(this@MainActivity) }
         val favoriteListFragment = FavoriteListFragment.newInstance().apply { swipDeleteListener(this@MainActivity) }
-
-//        favoriteListFragment.presenter
 
 
         tabList = listOf(
@@ -48,19 +46,12 @@ class MainActivity : AppCompatActivity(), FragmentInterface, MainInterface {
         val sectionsPagerAdapter = IntroPagerAdapter(tabList, supportFragmentManager)
         view_pager.adapter = sectionsPagerAdapter
         tabs.setupWithViewPager(view_pager)
-//        var checkedItem = 3
 
 
 //      dialog for sorting
         sortImageButton.setOnClickListener {
             val listSort = arrayOf("Price low to high", "Price high to low", "Rating 5-1")
             val aBuilder = AlertDialog.Builder(this@MainActivity)
-
-//            val mainFrag = sectionsPagerAdapter.getItem(0)//เรียกฟังก์ชันแท็ปนั้นมา
-//            var testget = listOf<MobileModel>()
-//            if (mainFrag is MobileListFragment) {
-//                 testget = mainFrag.getml()
-//            }
 
             var dataMobileList = mobileListFragment.getMobileList()
             aBuilder.setSingleChoiceItems(listSort, checkedItem) { dialogInterface, i ->
@@ -82,6 +73,7 @@ class MainActivity : AppCompatActivity(), FragmentInterface, MainInterface {
                         checkedItem = 2
                     }
                 }
+                mobileListFragment.setChecked(checkedItem)
                 dialogInterface.dismiss()
             }
             val aDialog = aBuilder.create()
@@ -94,28 +86,9 @@ class MainActivity : AppCompatActivity(), FragmentInterface, MainInterface {
 
     // viewPager คือตัวที่ hold หน้าสองหน้า fragment tab รับ adaptor เข้ามา ต้องการ viewpager
     override fun setFragment() {
-//        val mobileListFragment = MobileListFragment.newInstance()
-//        mobileListFragment.setInt(int)
-//        val favoriteListFragment = FavoriteListFragment.newInstance()
-//        val tabList = listOf(
-//                FragmentModel(MainActivity.LIST_MOBILE_TAB_NAME, mobileListFragment),
-//                FragmentModel(MainActivity.FAVORITE_LIST_TAB_NAME, favoriteListFragment)
-//        )
-//        val sectionsPagerAdapter = IntroPagerAdapter(tabList, supportFragmentManager)
-//        view_pager.adapter = sectionsPagerAdapter
-//        tabs.setupWithViewPager(view_pager)
+
     }
 
-//    override fun getFav(model: MobileModel) {
-//        var fragment = tabList[1].fragment as FavoriteListFragment
-//        fragment.setModelFav(model)
-//
-//    }
-
-    //    fun getSmth(model: MobileModel){
-//
-//    }
-//
     override fun setUpdateData(model: List<MobileModel>) {
         val favoriteFragment = tabList[1].fragment as FavoriteListFragment
         favoriteFragment.setMobileSecondary(model, checkedItem)
@@ -124,6 +97,7 @@ class MainActivity : AppCompatActivity(), FragmentInterface, MainInterface {
     override fun getSwipeDeletedId(mobileModel: MobileModel) {
         val mobileFragment = tabList[0].fragment as MobileListFragment
         mobileFragment.setDeletedId(mobileModel, checkedItem)
+
 
     }
 
