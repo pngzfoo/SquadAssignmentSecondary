@@ -48,6 +48,7 @@ class MobileListHolder(
                 itemView.heartImageButton.setBackgroundResource(R.drawable.cute_fill_heart_button)
                 model.check = true
                 favArrayList.add(model)
+                mobilePref?.putModelShared(favArrayList, listener)
 
             } else if (model.check) {
                 itemView.heartImageButton.setBackgroundResource(R.drawable.cute_heart_button)

@@ -6,9 +6,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 class MobileManager {
 
     companion object {
-        const val MOBILE_LIST_API = "https://scb-test-mobile.herokuapp.com/"
+        const val MOBILE_LIST_API = " https://scb-test-mobile.herokuapp.com/"
     }
-
 
     fun getService(): ApiService {
         val instance = Retrofit.Builder()

@@ -9,7 +9,7 @@ import com.google.gson.GsonBuilder
 import java.util.concurrent.CopyOnWriteArrayList
 
 
-class MyCustomSharedPreference(context: Context) {
+class MyCustomSharedPreference(var context: Context) {
 
     //   mode in int = MODE_PRIVATE or smth
     val sharedPreference: SharedPreferences = context.getSharedPreferences("FAVORITE_FRAGMENT", MODE_PRIVATE)

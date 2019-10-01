@@ -3,7 +3,7 @@ package com.example.testfragment.fragment
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import com.example.testfragment.presenter.BaseView
+import com.example.testfragment.mobileInterface.view.BaseView
 
 abstract class BaseFragment : Fragment(), BaseView {
 
