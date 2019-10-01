@@ -6,26 +6,25 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.testfragment.MyApplication
 import com.example.testfragment.R
 import com.example.testfragment.adapter.MobileAdapter
-import com.example.testfragment.mobile_interface.MainInterface
-import com.example.testfragment.mobile_interface.MobileItemClickListener
-import com.example.testfragment.mobile_interface.MobilePresenterInterface
+import com.example.testfragment.mobileInterface.MobileItemClickListener
+import com.example.testfragment.mobileInterface.view.MainInterface
+import com.example.testfragment.mobileInterface.view.MobilePresenterInterface
 import com.example.testfragment.model.MobileModel
 import com.example.testfragment.presenter.MobilePresenter
 import com.example.testfragment.presenter.MyCustomSharedPreference
-import com.example.testfragment.service.MobileManager
 import com.example.testfragment.ui.main.main.mobile_detail.MobileDetailActivity
 import com.google.gson.GsonBuilder
-import kotlinx.android.synthetic.main.fragment_main.*
+import kotlinx.android.synthetic.main.fragment_main.rvMobileList
 
 /**
  * A placeholder fragment containing a simple view.
  */
 
-class MobileListFragment : Fragment(), MobilePresenterInterface {
+class MobileListFragment : BaseFragment(), MobilePresenterInterface {
 
 
     companion object {
@@ -35,7 +34,9 @@ class MobileListFragment : Fragment(), MobilePresenterInterface {
 
     private lateinit var sharedPreference: SharedPreferences
     private var gson = GsonBuilder().create()
-    private val presenter = MobilePresenter(this, MobileManager.getService())
+
+    private val presenter = MobilePresenter(this, MyApplication.service)
+
     private var mobileList = listOf<MobileModel>()
     private lateinit var mobileAdapter: MobileAdapter
     private var addFavoriteListener: MainInterface? = null
@@ -75,7 +76,7 @@ class MobileListFragment : Fragment(), MobilePresenterInterface {
         presenter.getMobileApi(getDataSharedPref(), checkedItem)
     }
 
-    fun getDataSharedPref(): List<MobileModel> {
+    private fun getDataSharedPref(): List<MobileModel> {
         sharedPreference = context!!.getSharedPreferences("FAVORITE_FRAGMENT", Context.MODE_PRIVATE)
         val sharedPrefData = sharedPreference.getString("TEST", null)
         if (sharedPrefData != null) {
@@ -113,11 +114,7 @@ class MobileListFragment : Fragment(), MobilePresenterInterface {
 
         }
 
-        var customSharedPreference: MyCustomSharedPreference? = context?.let {
-            MyCustomSharedPreference(
-                it
-            )
-        }
+        var customSharedPreference: MyCustomSharedPreference? = context?.let { MyCustomSharedPreference(it) }
 
         mobileAdapter = MobileAdapter(mobileModelList, listener, customSharedPreference)
         rvMobileList.adapter = mobileAdapter
@@ -128,6 +125,11 @@ class MobileListFragment : Fragment(), MobilePresenterInterface {
     override fun setMobileSecond(mobileModelList: List<MobileModel>) {
         mobileAdapter.updateData(mobileModelList)
         mobileAdapter.notifyDataSetChanged()
+    }
+
+    override fun setView(): View? {
+        presenter.setView(view)
+        return view
     }
 
 

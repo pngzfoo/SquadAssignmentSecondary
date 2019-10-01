@@ -3,18 +3,23 @@ package com.example.testfragment.ui.main.main.mobile_detail
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.testfragment.MyApplication
 import com.example.testfragment.R
 import com.example.testfragment.adapter.ImageListAdapter
-import com.example.testfragment.mobile_interface.MobileImagePresenterInterface
+import com.example.testfragment.mobileInterface.view.MobileImagePresenterInterface
 import com.example.testfragment.model.MobileImageModel
 import com.example.testfragment.model.MobileModel
 import com.example.testfragment.presenter.MobilePicPresenter
-import com.example.testfragment.service.MobileManager
-import kotlinx.android.synthetic.main.activity_mobile_detail.*
+import kotlinx.android.synthetic.main.activity_mobile_detail.mobileBrandDetailTextView
+import kotlinx.android.synthetic.main.activity_mobile_detail.mobileDetailDescriptionTextView
+import kotlinx.android.synthetic.main.activity_mobile_detail.mobileDetailPriceTextView
+import kotlinx.android.synthetic.main.activity_mobile_detail.mobileDetailRatingTextView
+import kotlinx.android.synthetic.main.activity_mobile_detail.mobileDetailTextView
+import kotlinx.android.synthetic.main.activity_mobile_detail.rvImageList
 
-class MobileDetailActivity : AppCompatActivity(), MobileImagePresenterInterface {
+class MobileDetailActivity : BaseActivity(),
+    MobileImagePresenterInterface {
 
     companion object {
         const val EXTRA_KEY_MODEL = "MODEL"
@@ -43,7 +48,7 @@ class MobileDetailActivity : AppCompatActivity(), MobileImagePresenterInterface 
 
     private fun setView() {
 
-        var mobileModel: MobileModel = intent.getParcelableExtra(EXTRA_KEY_MODEL)
+        val mobileModel: MobileModel = intent.getParcelableExtra(EXTRA_KEY_MODEL)
 
 
         mobileDetailTextView.text = mobileModel.name
@@ -52,13 +57,13 @@ class MobileDetailActivity : AppCompatActivity(), MobileImagePresenterInterface 
         mobileDetailPriceTextView.text = "Price: $${mobileModel.price}"
         mobileDetailRatingTextView.text = "Rating: ${mobileModel.rating}"
 
-        val presenter = MobilePicPresenter(this, MobileManager.getService())
+        val presenter = MobilePicPresenter(this, MyApplication.service)
         mobileModel.id.let { presenter.getImageApi(it) }
-
 
         //back button
         val actionbar = supportActionBar
         actionbar!!.setDisplayHomeAsUpEnabled(true)
+
 
     }
 

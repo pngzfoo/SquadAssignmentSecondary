@@ -3,7 +3,7 @@ package com.example.testfragment.presenter
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
-import com.example.testfragment.mobile_interface.MobileItemClickListener
+import com.example.testfragment.mobileInterface.MobileItemClickListener
 import com.example.testfragment.model.MobileModel
 import com.google.gson.GsonBuilder
 import java.util.concurrent.CopyOnWriteArrayList

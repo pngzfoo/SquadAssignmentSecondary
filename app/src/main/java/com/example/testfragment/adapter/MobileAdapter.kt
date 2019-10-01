@@ -2,7 +2,7 @@ package com.example.testfragment.adapter
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.testfragment.mobile_interface.MobileItemClickListener
+import com.example.testfragment.mobileInterface.MobileItemClickListener
 import com.example.testfragment.model.MobileModel
 import com.example.testfragment.presenter.MyCustomSharedPreference
 
@@ -23,6 +23,15 @@ class MobileAdapter(
         }
     }
 
+    fun updateData(mobileModelList: List<MobileModel>) {
+        mobileList = mobileModelList
+    }
+
+    fun swipeDelete(mobileModel: MobileModel) {
+        mobileArrayList.remove(mobileModel)
+        mobilePref?.deleteStr(mobileModel.id, listener)
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MobileListHolder {
         return MobileListHolder(parent, mobilePref, mobileArrayList)
     }
@@ -35,13 +44,5 @@ class MobileAdapter(
 
     }
 
-    fun updateData(mobileModelList: List<MobileModel>) {
-        mobileList = mobileModelList
-    }
-
-    fun swipeDelete(mobileModel: MobileModel) {
-        mobileArrayList.remove(mobileModel)
-        mobilePref?.deleteStr(mobileModel.id, listener)
-    }
 
 }

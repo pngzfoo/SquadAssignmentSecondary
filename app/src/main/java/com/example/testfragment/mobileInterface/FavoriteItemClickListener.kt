@@ -1,4 +1,4 @@
-package com.example.testfragment.mobile_interface
+package com.example.testfragment.mobileInterface
 
 import com.example.testfragment.model.MobileModel
 

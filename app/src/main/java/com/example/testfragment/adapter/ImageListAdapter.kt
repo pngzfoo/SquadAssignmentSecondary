@@ -5,7 +5,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.testfragment.model.MobileImageModel
 
 class ImageListAdapter(
-        private val mobileImageList: List<MobileImageModel>
+    private val mobileImageList: List<MobileImageModel>
 
 ) : RecyclerView.Adapter<ImageListHolder>() {
 

@@ -10,21 +10,26 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.testfragment.R
 import com.example.testfragment.adapter.MobileFavoriteAdapter
-import com.example.testfragment.mobile_interface.FavoriteItemClickListener
-import com.example.testfragment.mobile_interface.MainInterface
-import com.example.testfragment.mobile_interface.MobileFavoritePresenterInterface
+import com.example.testfragment.mobileInterface.FavoriteItemClickListener
+import com.example.testfragment.mobileInterface.view.MainInterface
+import com.example.testfragment.mobileInterface.view.MobileFavoritePresenterInterface
 import com.example.testfragment.model.MobileModel
 import com.example.testfragment.presenter.MobileFavoritePresenter
 import com.example.testfragment.presenter.MyCustomSharedPreference
 import com.example.testfragment.presenter.SwipeToDeleteCallback
 import com.example.testfragment.ui.main.main.mobile_detail.MobileDetailActivity
-import kotlinx.android.synthetic.main.fragment_favorite.*
+import kotlinx.android.synthetic.main.fragment_favorite.rvMobileFavoriteList
 
 class FavoriteListFragment : Fragment(), MobileFavoritePresenterInterface {
 
     companion object {
         // tell that what value should send when navigate
         fun newInstance(): FavoriteListFragment = FavoriteListFragment()
+
+        const val SORT_BY_PRICE = 0
+        const val SORT_BY_REVERSE_PRICE = 1
+        const val SORT_BY_RATING = 2
+        const val DEFAULT = 3
     }
 
     override fun onCreateView(
@@ -46,21 +51,21 @@ class FavoriteListFragment : Fragment(), MobileFavoritePresenterInterface {
     }
 
     fun sortPrice() {
-        var dataMobileFavoriteList = mobileFavoriteAdapter.getMobileFavoriteList()
-        var dataUpdate = presenter.sortPrice(dataMobileFavoriteList)
+        val dataMobileFavoriteList = mobileFavoriteAdapter.getMobileFavoriteList()
+        val dataUpdate = presenter.sortPrice(dataMobileFavoriteList)
         setMobileThird(dataUpdate)
     }
 
     fun sortReversePrice() {
-        var dataMobileFavoriteList = mobileFavoriteAdapter.getMobileFavoriteList()
-        var dataUpdate = presenter.sortReversePrice(dataMobileFavoriteList)
+        val dataMobileFavoriteList = mobileFavoriteAdapter.getMobileFavoriteList()
+        val dataUpdate = presenter.sortReversePrice(dataMobileFavoriteList)
         setMobileThird(dataUpdate)
 
     }
 
     fun sortRating() {
-        var dataMobileFavoriteList = mobileFavoriteAdapter.getMobileFavoriteList()
-        var dataUpdate = presenter.sortRating(dataMobileFavoriteList)
+        val dataMobileFavoriteList = mobileFavoriteAdapter.getMobileFavoriteList()
+        val dataUpdate = presenter.sortRating(dataMobileFavoriteList)
         setMobileThird(dataUpdate)
 
     }
@@ -68,13 +73,11 @@ class FavoriteListFragment : Fragment(), MobileFavoritePresenterInterface {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         context?.let { context ->
-            var myCustomSharedPref = MyCustomSharedPreference(context)
+            val myCustomSharedPref = MyCustomSharedPreference(context)
             presenter.getMobileFavorite(myCustomSharedPref)
         }
 
     }
-
-
     override fun setMobile(mobileFavModelList: List<MobileModel>) {
 
         val listener = object : FavoriteItemClickListener {
@@ -103,27 +106,25 @@ class FavoriteListFragment : Fragment(), MobileFavoritePresenterInterface {
     }
 
     override fun setMobileSecondary(mobileList: List<MobileModel>, checkedItem: Int) {
-        if (mobileList != null) {
-            when (checkedItem) {
-                0 -> {
-                    mobileFavoriteAdapter.updateData(mobileList)
-                    sortPrice()
-                }
+        when (checkedItem) {
+            SORT_BY_PRICE -> {
+                mobileFavoriteAdapter.updateData(mobileList)
+                sortPrice()
+            }
 
-                1 -> {
-                    mobileFavoriteAdapter.updateData(mobileList)
-                    sortReversePrice()
-                }
-                2 -> {
-                    mobileFavoriteAdapter.updateData(mobileList)
-                    sortRating()
-                }
-                3 -> {
-                    setMobileThird(mobileList)
-
-                }
+            SORT_BY_REVERSE_PRICE -> {
+                mobileFavoriteAdapter.updateData(mobileList)
+                sortReversePrice()
+            }
+            SORT_BY_RATING -> {
+                mobileFavoriteAdapter.updateData(mobileList)
+                sortRating()
+            }
+            DEFAULT -> {
+                setMobileThird(mobileList)
 
             }
+
         }
 
 

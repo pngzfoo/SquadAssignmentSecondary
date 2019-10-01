@@ -5,10 +5,13 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.testfragment.R
-import com.example.testfragment.mobile_interface.FavoriteItemClickListener
+import com.example.testfragment.mobileInterface.FavoriteItemClickListener
 import com.example.testfragment.model.MobileModel
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.mobile_favorite_card_holder.view.*
+import kotlinx.android.synthetic.main.mobile_favorite_card_holder.view.nameFav
+import kotlinx.android.synthetic.main.mobile_favorite_card_holder.view.picFav
+import kotlinx.android.synthetic.main.mobile_favorite_card_holder.view.priceFav
+import kotlinx.android.synthetic.main.mobile_favorite_card_holder.view.ratingFav
 
 class MobileFavoriteHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
     LayoutInflater.from(parent.context).inflate(R.layout.mobile_favorite_card_holder, parent, false)

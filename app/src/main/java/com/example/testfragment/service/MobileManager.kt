@@ -7,20 +7,15 @@ class MobileManager {
 
     companion object {
         const val MOBILE_LIST_API = "https://scb-test-mobile.herokuapp.com/"
+    }
 
-        var instance: ApiService? = null
 
-        @JvmStatic
-        fun getService(): ApiService{
-            if(instance != null){
-                return instance as ApiService
-            }
-            instance =  Retrofit.Builder()
-                .baseUrl(MOBILE_LIST_API)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
-                .run { create(ApiService::class.java) }
-            return instance as ApiService
-        }
+    fun getService(): ApiService {
+        val instance = Retrofit.Builder()
+            .baseUrl(MOBILE_LIST_API)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .run { create(ApiService::class.java) }
+        return instance as ApiService
     }
 }
